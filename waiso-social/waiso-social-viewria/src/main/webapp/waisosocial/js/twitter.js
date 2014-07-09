@@ -16,7 +16,7 @@ jQuery.twitter = function(){
 					_self.executionThread("retweets", "off");
 				}
 			});
-			
+
 			$("#chkTweets").change(function(){
 				if(this.checked){
 					_self.executionThread("tweets", "on");
