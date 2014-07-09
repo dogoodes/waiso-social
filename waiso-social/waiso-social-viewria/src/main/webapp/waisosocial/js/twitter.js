@@ -17,6 +17,22 @@ jQuery.twitter = function(){
 				}
 			});
 			
+			$("#chkTweets").change(function(){
+				if(this.checked){
+					_self.executionThread("tweets", "on");
+				}else{
+					_self.executionThread("tweets", "off");
+				}
+			});
+			
+			$("#chkUsers").change(function(){
+				if(this.checked){
+					_self.executionThread("users", "on");
+				}else{
+					_self.executionThread("users", "off");
+				}
+			});
+			
 			_self.loadingInitialData();
 		};
 		
@@ -34,8 +50,32 @@ jQuery.twitter = function(){
 					}else if(consequence == "ERROR"){
 						redirectInternalServerError();
 					}else if (consequence == "SUCCESS"){
+						_self.finExecutionThread();
 						_self.findUsers();
 						_self.findTweets();
+					}
+				}
+			});
+		});
+		
+		this.finExecutionThread = (function(){
+			$.ajax({
+				type:"POST",
+				url:url,
+				async:false,
+				data: ({webClassId : "threads", invoke:"executions"}),
+				dataType:"json",
+				success: function(jsonReturn){
+					var consequence = jsonReturn.consequence;
+					if(consequence == "NO_ACCESS"){
+						document.location.href = jsonReturn.page;
+					}else if(consequence == "ERROR"){
+						redirectInternalServerError();
+					}else if (consequence == "SUCCESS"){
+						var threads = jsonReturn.consequence;
+						$('#chkRetweetUsers').prop('checked', threads["retweet"]);
+						$('#chkTweets').prop('checked', threads["tweet"]);
+						$('#chkUsers').prop('checked', threads["user"]);
 					}
 				}
 			});
