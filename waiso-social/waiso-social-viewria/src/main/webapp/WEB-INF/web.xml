@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<display-name>WaisoSocial</display-name>
+	<filter>
+		<filter-name>SecurityFilter</filter-name>
+		<filter-class>com.waiso.social.viewria.servlets.SecurityFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SecurityFilter</filter-name>
+		<servlet-name>WaisoSocial</servlet-name>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>WaisoSocial</servlet-name>
+		<servlet-class>com.waiso.social.viewria.servlets.WaisoSocialServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- Servlet Mapping -->
+	<servlet-mapping>
+		<servlet-name>WaisoSocial</servlet-name>
+		<url-pattern>/servlet/servlet.waisosocial</url-pattern>
+	</servlet-mapping>
+
+	<!-- Pages Mapping -->
+	<welcome-file-list>
+		<welcome-file>login.html</welcome-file>
+	</welcome-file-list>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error404.html</location>
+	</error-page>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+		classpath:/META-INF/spring/waiso-social-controller-context.xml
+		classpath:/META-INF/spring/waiso-social-twitter-context.xml
+		<!--/WEB-INF/context.xml-->
+		</param-value>
+	</context-param>
+</web-app>

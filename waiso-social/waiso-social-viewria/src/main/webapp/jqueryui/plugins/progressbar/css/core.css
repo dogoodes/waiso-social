@@ -1,0 +1,26 @@
+﻿BODY{ padding:5px 20px; }
+fieldset
+{
+	font-family:Calibri;
+	padding:20px;
+}
+fieldset legend{ padding:0px 5px; }
+.demo
+{
+	padding:10px;	
+}
+
+H3
+{
+	margin:0;
+	padding-bottom:5px;
+	font-size:14px;
+	font-weight:normal;
+}
+P
+{
+	font-size:14px;
+	margin:0;
+	padding-bottom:5px;
+}
+.progress{ width:200px;}

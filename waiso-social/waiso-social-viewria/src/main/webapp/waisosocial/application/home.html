@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- Informacoes -->
+    	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="robots" content="noindex, nofollow"/>
+        <meta http-equiv="content-language" content="pt-br"/>
+        <meta name="author" content="Alberto Cerqueira"/>
+        <meta name="reply-to" content="alberto.cerqueira1990@gmail.com"/>
+        
+        <!-- css -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800"/>
+        <link rel="stylesheet" href="/waiso-social-viewria/waisosocial/fonts/font-awesome-4.0.3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="/waiso-social-viewria/waisosocial/css/application.css" media="screen" type="text/css" />
+        
+        <!-- javascript (O arquivo application.js e utilizado com biblioteca jquery.js) -->
+        <script type="text/javascript" src="/waiso-social-viewria/waisosocial/js/application.js"></script>
+        <script type="text/javascript" src="/waiso-social-viewria/jqueryui/plugins/global/global.js"></script>
+        <script type="text/javascript" src="/waiso-social-viewria/jqueryui/plugins/form/jquery.form.js"></script>
+        <script type="text/javascript" src="/waiso-social-viewria/jqueryui/plugins/maskinput/jquery.maskedinput.js"></script>
+        <script type="text/javascript" src="/waiso-social-viewria/jqueryui/plugins/event/event.js"></script>
+        <script type="text/javascript" src="/waiso-social-viewria/waisosocial/js/include/nav.js"></script>
+        <script type="text/javascript" src="/waiso-social-viewria/waisosocial/js/include/menu.js"></script>
+        <script type="text/javascript" src="/waiso-social-viewria/waisosocial/js/home.js"></script>
+        <title>Waiso Social- Home</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation" id="bar-top"></nav>
+        
+        <div class="sidebar-background">
+            <div class="primary-sidebar-background"></div>
+        </div>
+        <div class="primary-sidebar" id="menu-left"></div>
+        
+        <div class="main-content">
+            <div class="container">
+                <div class="row">
+                    <div class="area-top clearfix">
+                        <div class="pull-left header">
+                            <h3 class="title">
+                                <i class="icon-home"></i>
+                                Home
+                            </h3>
+                            <h5>
+                                <span>
+                                    Bem Vindo ao Waiso Social
+                                </span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container padded">
+                <div id="breadcrumbs">
+                    <div class="breadcrumb-button blue" onclick="javascript:window.location='home.html'">
+                        <span class="breadcrumb-label"><i class="icon-home"></i> Home</span>
+                        <span class="breadcrumb-arrow"><span></span></span>
+                    </div>
+                    <div class="breadcrumb-button">
+                        <span class="breadcrumb-label">
+                            <i class="icon-star-o"></i> Redes Sociais com bot Disponível
+                        </span>
+                        <span class="breadcrumb-arrow"><span></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                	<div class="col-md-11">
+                        <div class="action-nav-normal">
+                            <div class="row action-nav-row">
+                                <div class="col-sm-3 action-nav-button">
+                                    <a href="/waiso-social-viewria/waisosocial/application/facebook.html" title="Facebook">
+                                        <i class="icon-facebook-sign"></i>
+                                        <span>Facebook</span>
+                                    </a>
+                                </div>
+                                <div class="col-sm-3 action-nav-button">
+                                    <a href="/waiso-social-viewria/waisosocial/application/twitters.html" title="Twitter">
+                                        <i class="icon-twitter-sign"></i>
+                                        <span>Twitter</span>
+                                    </a>
+                                </div>
+                                <div class="col-sm-3 action-nav-button">
+                                    <a href="/waiso-social-viewria/waisosocial/application/googleplus.html" title="Google Plus">
+                                        <i class="icon-google-sign"></i>
+                                        <span>Google Plus</span>
+                                    </a>
+                                </div>
+                                <div class="col-sm-3 action-nav-button">
+                                    <a href="/waiso-social-viewria/waisosocial/application/linkedin.html" title="LinkedIn">
+                                        <i class="icon-linkedin-sign"></i>
+                                        <span>LinkedIn</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+            </div>
+        </div>
+
+        <!-- Iniciando javascript de negocio -->
+        <script>
+			$(document).ready(function(){
+				var _home = $.home();
+				_home.init();
+			});
+		</script>
+    </body>
+</html>

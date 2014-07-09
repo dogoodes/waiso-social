@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+	<head>
+		<!-- Informacoes -->
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="robots" content="noindex, nofollow"/>
+        <meta http-equiv="content-language" content="pt-br"/>
+        <meta name="author" content="Alberto Cerqueira"/>
+        <meta name="reply-to" content="alberto.cerqueira1990@gmail.com"/>
+	
+		<!-- css -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
+	  	<link rel="stylesheet" href="/waiso-social-viewria/waisosocial/css/application.css" media="screen" type="text/css" />
+	  	
+	  	<!-- javascript (O arquivo application.js e utilizado com biblioteca jquery.js) -->
+	  	<script type="text/javascript" src="/waiso-social-viewria/waisosocial/js/application.js"></script>
+	  	<script type="text/javascript" src="/waiso-social-viewria/jqueryui/plugins/global/global.js"></script>
+        <script type="text/javascript" src="/waiso-social-viewria/jqueryui/plugins/form/jquery.form.js"></script>
+        <script type="text/javascript" src="/waiso-social-viewria/waisosocial/js/login.js"></script>
+	  	<title>Waiso Social - Login</title>
+	</head>
+	<body>
+		<div class="container">
+			<div id="alerts-errors"></div>
+			<div class="col-md-4 col-md-offset-4">
+			  	<div class="padded">
+				    <div class="login box" style="margin-top: 80px;">
+				      	<div class="box-header">
+				        	<span class="title">Login</span>
+				      	</div>
+				      	<div class="box-content padded">
+					    	<form name="login" id="login"  method="post" action="/servlet/servlet.waisosocial" autocomplete="false" class="separate-sections validatable">
+					        	<input type="hidden" name="webClassId" id="webClassId" value="login"/>
+								<input type="hidden" name="invoke" id="invoke" value="login"/>
+								
+					          	<div class="input-group addon-left">
+					            	<span class="input-group-addon" href="#">
+					              		<i class="icon-user"></i>
+					            	</span>
+									<input type="text" class="validate[required, minSize[5], maxSize[15]]" data-prompt-position="topLeft" placeholder="login" id="login" name="login" maxlength="15"/>
+					          	</div>
+					          	<div class="input-group addon-left">
+					            	<span class="input-group-addon" href="#">
+					              		<i class="icon-key"></i>
+					            	</span>
+					            	<input type="password" class="validate[required, minSize[5], maxSize[15]]" data-prompt-position="topLeft" placeholder="Senha" id="password" name="password" maxlength="15"/>
+					          	</div>
+					          	<div>
+					            	<a class="btn btn-blue btn-block" href="#" id="stbFormLogin" name="stbFormLogin">
+						                Logar <i class="icon-signin"></i>
+						            </a>
+						    	</div>
+					        </form>
+				      	</div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Iniciando javascript de negocio -->
+        <script>
+			$(document).ready(function(){
+				var _login = $.login();
+				_login.init();
+			});
+		</script>
+	</body>
+</html>
