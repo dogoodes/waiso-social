@@ -11,6 +11,7 @@ public class User extends Thread {
 	//Pessoa que me segue, mas eu nao sigo ela...
 	private static LinkedList<Long> friendsNotFollowers = new LinkedList<Long>();
 	private static LinkedList<String> follow = new LinkedList<String>();
+	private static LinkedList<String> followDataUrl = new LinkedList<String>();
 	
 	//Eu sigo a pessoa, mas ela nao me segue...
 	private static LinkedList<Long> followersNotFriends = new LinkedList<Long>();
@@ -40,8 +41,13 @@ public class User extends Thread {
             	//Vou seguir pessoa que me segue, mas eu nao sigo ela... 
             	if(friendsNotFollowers.size() > 0){
             		Long idFriend = getIdFriend();
-            		String twitter = appTwitter.follow(idFriend);
-            		follow.add(twitter);
+            		twitter4j.User user = appTwitter.follow(idFriend);
+            		if(user != null){
+            			follow.add(user.getScreenName());
+            			if(user.getURL() != null){
+            				followDataUrl.add(user.getURL());
+            			}
+            		}
             	}
             	
             	//Vou parar de seguir pessoa que eu sigo, mas ela nao me segue...
@@ -95,6 +101,10 @@ public class User extends Thread {
 	
 	public static LinkedList<String> getUnfollow() {
 		return unfollow;
+	}
+	
+	public static LinkedList<String> getFollowDataUrl() {
+		return followDataUrl;
 	}
 	
 	//Para seguir

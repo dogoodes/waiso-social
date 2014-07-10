@@ -160,25 +160,24 @@ public class AppTwitter {
 		return idsFollowers;
 	}
 	
-	public String follow(long id){
-		String twitter = null;
+	public User follow(long id){
+		User user = null;
 		try{
-			User user = AppTwitter.getTwitter().showUser(id);
+			user = AppTwitter.getTwitter().showUser(id);
 			AppTwitter.log(user);
 	        Double porcentagemSeguindo = AppTwitter.calculoPorcentagemSeguindo(user.getFollowersCount(), user.getFriendsCount());
 	        //Porcentagem acima de 25% e nao estiver sendo seguido por nos ou no aguardo...
 	        if(porcentagemSeguindo.intValue() > 25 && !user.isFollowRequestSent()){
 	        	AppTwitter.getTwitter().createFriendship(id);
-	        	twitter = user.getScreenName();
 	        	if(GerenciadorLog.isDebug(Tweet.class)){
 					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("percentage.followers", porcentagemSeguindo));
-					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("building.friendship", twitter));
+					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("building.friendship", user.getScreenName()));
 				}
 	        }
 		}catch(TwitterException e){
 			e.printStackTrace();
 		}
-		return twitter;
+		return user;
 	}
 	
 	public String unfollow(long id){
