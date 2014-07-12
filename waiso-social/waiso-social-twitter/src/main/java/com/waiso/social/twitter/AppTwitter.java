@@ -74,7 +74,7 @@ public class AppTwitter {
 	public List<String> getUsersMain() throws IOException {
 		List<String> usersMain = new ArrayList<String>();
 		String environment = GerenciadorConfiguracao.getConfiguracao("development.environment");
-		FileInputStream stream = new FileInputStream(environment + "/waiso-social-twitter/src/main/resources/META-INF/twitter-txt/users-retweets");
+		FileInputStream stream = new FileInputStream(environment + "/waiso-social-twitter/src/main/resources/META-INF/twitter-txt/users-main");
 		InputStreamReader reader = new InputStreamReader(stream);
 		BufferedReader br = new BufferedReader(reader);
 		String user = br.readLine();

@@ -57610,11 +57610,13 @@ $(function () {
         orientation: "vertical"
       });
     });
+    /*TODO: Alterado por: Equipe Waiso Developer
     $(".iButton-icons").iButton({
       labelOn: "<i class='icon-ok'></i>",
       labelOff: "<i class='icon-remove'></i>",
       handleWidth: 30
     });
+    */
     $(".iButton-enabled").iButton({
       labelOn: "ENABLED",
       labelOff: "DISABLED",

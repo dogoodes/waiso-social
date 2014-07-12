@@ -82,5 +82,6 @@
 		<module>waiso-social-viewria</module>
 		<module>waiso-social-twitter</module>
 		<module>waiso-social-controller</module>
+		<module>waiso-social-facebook</module>
 	</modules>
 </project>

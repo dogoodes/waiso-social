@@ -6,10 +6,10 @@
 		<artifactId>waiso-social</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.waiso.social.twitter</groupId>
-	<artifactId>waiso-social-twitter</artifactId>
+	<artifactId>waiso-social-facebook</artifactId>
+	<groupId>com.waiso.social.facebook</groupId>
 	<packaging>jar</packaging>
-	<name>waiso-social-twitter</name>
+	<name>waiso-social-facebook</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,9 +32,9 @@
 	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>org.twitter4j</groupId>
-			<artifactId>twitter4j-core</artifactId>
-			<version>[4.0,)</version>
+			<groupId>org.facebook4j</groupId>
+			<artifactId>facebook4j-core</artifactId>
+			<version>[2.1,)</version>
 		</dependency>
 
 		<dependency>
@@ -47,7 +47,7 @@
 			<artifactId>spring-boot-starter-data-solr</artifactId>
 			<version>1.1.4.RELEASE</version>
 		</dependency>
-		
+
 		<!-- Dependencias de modulos do projeto -->
 		<dependency>
 			<groupId>com.waiso.social.framework</groupId>

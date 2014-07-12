@@ -11,25 +11,25 @@ jQuery.twitter = function(){
 		this.init = function(){
 			$("#chkRetweetUsers").change(function(){
 				if(this.checked){
-					_self.executionThread("retweets", "on");
+					//_self.executionThread("retweets", "on");
 				}else{
-					_self.executionThread("retweets", "off");
+					//_self.executionThread("retweets", "off");
 				}
 			});
 
 			$("#chkTweets").change(function(){
 				if(this.checked){
-					_self.executionThread("tweets", "on");
+					//_self.executionThread("tweets", "on");
 				}else{
-					_self.executionThread("tweets", "off");
+					//_self.executionThread("tweets", "off");
 				}
 			});
 			
 			$("#chkUsers").change(function(){
 				if(this.checked){
-					_self.executionThread("users", "on");
+					//_self.executionThread("users", "on");
 				}else{
-					_self.executionThread("users", "off");
+					//_self.executionThread("users", "off");
 				}
 			});
 			
@@ -72,10 +72,16 @@ jQuery.twitter = function(){
 					}else if(consequence == "ERROR"){
 						redirectInternalServerError();
 					}else if (consequence == "SUCCESS"){
-						var threads = jsonReturn.consequence;
+						var threads = jsonReturn.dado;
 						$('#chkRetweetUsers').prop('checked', threads["retweet"]);
 						$('#chkTweets').prop('checked', threads["tweet"]);
 						$('#chkUsers').prop('checked', threads["user"]);
+						
+						$(".iButton-icons").iButton({
+							labelOn: "<i class='icon-ok'></i>",
+						    labelOff: "<i class='icon-remove'></i>",
+						    handleWidth: 30
+						});
 					}
 				}
 			});

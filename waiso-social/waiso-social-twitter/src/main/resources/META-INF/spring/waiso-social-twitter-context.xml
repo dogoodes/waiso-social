@@ -6,6 +6,6 @@
 	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
 	
 	<bean id="users" class="com.waiso.social.twitter.users.Users"></bean>
-	
 	<bean id="tweets" class="com.waiso.social.twitter.tweets.Tweets"></bean>
+	<bean id="threads" class="com.waiso.social.twitter.threads.Threads"></bean>
 </beans>
