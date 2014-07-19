@@ -1,9 +1,5 @@
 package com.waiso.social.twitter;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,17 +10,13 @@ import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
 
-import com.waiso.social.framework.configuracao.GerenciadorConfiguracao;
 import com.waiso.social.framework.i18n.GerenciadorMensagem;
 import com.waiso.social.framework.log.GerenciadorLog;
 
 public class AppTwitter {
 
 	private static Twitter twitter = null;
-	public static com.waiso.social.twitter.User user = new com.waiso.social.twitter.User(com.waiso.social.twitter.Process.in10Minutes.getTime());
-	public static com.waiso.social.twitter.Tweet tweet = new com.waiso.social.twitter.Tweet(com.waiso.social.twitter.Process.in10Minutes.getTime());
-	public static com.waiso.social.twitter.Retweet retweet = new com.waiso.social.twitter.Retweet(com.waiso.social.twitter.Process.in10Minutes.getTime());
-	
+
 	public static Double calculoPorcentagemSeguindo(Integer seguidores, Integer seguindo){
 		return (double) ((100*seguindo)/(seguidores));
 	}
@@ -52,55 +44,6 @@ public class AppTwitter {
 		if(GerenciadorLog.isDebug(AppTwitter.class)){
 			GerenciadorLog.debug(AppTwitter.class, "Usu\u00e1rio com ID [" + user.getId() + "] e Twitter [" + user.getScreenName() + "]:");
 			GerenciadorLog.debug(AppTwitter.class, "[Seguindo: " + user.getFriendsCount() + "] - [Seguido por: " + user.getFollowersCount() + "]");
-		}
-	}
-	
-	@SuppressWarnings("resource")
-	public List<String> getUsersRetweets() throws IOException {
-		List<String> usersRetweets = new ArrayList<String>();
-		String environment = GerenciadorConfiguracao.getConfiguracao("development.environment");
-		FileInputStream stream = new FileInputStream(environment + "/waiso-social-twitter/src/main/resources/META-INF/twitter-txt/users-retweets");
-		InputStreamReader reader = new InputStreamReader(stream);
-		BufferedReader br = new BufferedReader(reader);
-		String user = br.readLine();
-		while(user != null) {
-			usersRetweets.add(user);
-			user = br.readLine();
-		}
-		return usersRetweets;
-	}
-	
-	@SuppressWarnings("resource")
-	public List<String> getUsersMain() throws IOException {
-		List<String> usersMain = new ArrayList<String>();
-		String environment = GerenciadorConfiguracao.getConfiguracao("development.environment");
-		FileInputStream stream = new FileInputStream(environment + "/waiso-social-twitter/src/main/resources/META-INF/twitter-txt/users-main");
-		InputStreamReader reader = new InputStreamReader(stream);
-		BufferedReader br = new BufferedReader(reader);
-		String user = br.readLine();
-		while(user != null) {
-			usersMain.add(user);
-			user = br.readLine();
-		}
-		return usersMain;
-	}
-	
-	public void setFriendsAndFollowers(){
-		List<Long> idsFriends = getFriends(new String[0]);
-		List<Long> idsFollowers = getFollowers(new String[0]);
-		
-		//Eu sigo a pessoa, mas ela nao me segue...
-		for (Long idsFollower : idsFollowers) {
-			if(!idsFriends.contains(idsFollower)){
-				com.waiso.social.twitter.User.addFriendsNotFollowers(idsFollower);
-			}
-		}
-		
-		//Pessoa que me segue, mas eu nao sigo ela...
-		for (Long idsFriend : idsFriends) {
-			if(!idsFollowers.contains(idsFriend)){
-				com.waiso.social.twitter.User.addFollowersNotFriends(idsFriend);
-			}
 		}
 	}
 	
@@ -180,41 +123,41 @@ public class AppTwitter {
 		return user;
 	}
 	
-	public String unfollow(long id){
-		String twitter = null;
+	public User unfollow(long id){
 		try{
 			User user = AppTwitter.getTwitter().showUser(id);
 			AppTwitter.log(user);
 	        Double porcentagemSeguindo = AppTwitter.calculoPorcentagemSeguindo(user.getFollowersCount(), user.getFriendsCount());
 	        boolean isUsuarioPrincipal = false;
-			List<String> usersRetweets = getUsersMain();
-			for (String userStr : usersRetweets) {
-				if (userStr.equals(user.getScreenName())) {
+			List<String> usersMains = (new AppTxt()).getUsersMain();
+			for(String userStr : usersMains){
+				if(userStr.equals(user.getScreenName())){
         			isUsuarioPrincipal = true;
         			break;
         		}
 			}
-	        if (!isUsuarioPrincipal && porcentagemSeguindo.intValue() < 25) {
+	        if(!isUsuarioPrincipal && porcentagemSeguindo.intValue() < 25){
 	        	AppTwitter.getTwitter().destroyFriendship(id);
-	        	twitter = user.getScreenName();
-	        	if (GerenciadorLog.isDebug(Tweet.class)) {
+	        	if(GerenciadorLog.isDebug(Tweet.class)){
 					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("percentage.followers", porcentagemSeguindo));
-					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("undoing.friendship", twitter));
+					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("undoing.friendship", user.getScreenName()));
 				}
 	        }
-	        if (isUsuarioPrincipal) {
+	        if(isUsuarioPrincipal){
 	        	GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("percentage.followers", porcentagemSeguindo));
 	        	GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("user.main.content"));
 	        }
+	        return user;
 		}catch(TwitterException e){
 			if(e.getErrorCode() == 88){
 				System.out.println(GerenciadorMensagem.getMessage("twitter.erro.limite"));
 			}else{
 				e.printStackTrace();
 			}
+			return null;
 		}catch(Exception e){
 			e.printStackTrace();
+			return null;
 		}
-		return twitter;
 	}
 }

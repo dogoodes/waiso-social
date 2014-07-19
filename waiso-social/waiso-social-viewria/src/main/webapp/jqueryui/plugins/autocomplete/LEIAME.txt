@@ -1,5 +1,0 @@
-Foi incrementado no autocomplete a opcao de adicionar novos dados, isso foi feito pois
-quando faco a inclusao eu retorno o dado incluido pelo usuario e adiciono na lista interna
-do autocomplete para que nao seja necessario recarregar tudo do banco novamente.
-
-Rodolfo Dias

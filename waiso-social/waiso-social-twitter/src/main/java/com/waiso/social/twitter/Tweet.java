@@ -8,23 +8,18 @@ import twitter4j.TwitterException;
 import com.waiso.social.framework.i18n.GerenciadorMensagem;
 import com.waiso.social.framework.log.GerenciadorLog;
 
+/**
+ * Thread responsavel por enviar um tweet a cada
+ * invervalo de tempo iniciado para a classe.
+ */
 public class Tweet extends Thread {
 
 	private static LinkedList<String> tweets = new LinkedList<String>();
-	private static LinkedList<String> tweetsSent = new LinkedList<String>();
 	private long time = 0;
 	
 	public Tweet(){}
 	public Tweet(long time){
 		this.time = time;
-	}
-
-	public void start(){
-		AppTwitter.tweet.start();
-	}
-	
-	public void stop(long time){
-		AppTwitter.tweet.stop(time);
 	}
 	
 	@Override
@@ -36,8 +31,11 @@ public class Tweet extends Thread {
         			if(GerenciadorLog.isDebug(Tweet.class)){
 						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.sending", mTweet));
 					}
-            		Tweet tweet = new Tweet();
-                	tweet.tweet(mTweet);
+        			tweet(mTweet);
+            	}else{
+            		if(GerenciadorLog.isDebug(Tweet.class)){
+						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("without.tweets"));
+					}
             	}
                 Tweet.sleep(time);
             }catch(Exception e){
@@ -61,19 +59,10 @@ public class Tweet extends Thread {
 	public static void setTweets(LinkedList<String> tweets) {
 		Tweet.tweets = tweets;
 	}
-
-	public static LinkedList<String> getTweetsSent() {
-		return tweetsSent;
-	}
 	
-	public static void setTweetsSent(LinkedList<String> tweetsSent) {
-		Tweet.tweetsSent = tweetsSent;
-	}
-	
-	public static void tweetsSentClear() {
-		tweetsSent.clear();
-	}
-	
+	/**
+	 * Tweets na memoria. Seram enviados de acordo com a ordem da fila.
+	 */
 	public String getTweet(){
 		int posicao = tweets.size()-1;
 		String mTweet = tweets.get(posicao);
@@ -88,14 +77,12 @@ public class Tweet extends Thread {
 				if(GerenciadorLog.isDebug(Tweet.class)){
 					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.sent.sucess", mTweet));
 				}
-				tweetsSent.add(mTweet);
 			}catch(TwitterException e){
 				if(e.getErrorCode() == 187){
 					if(GerenciadorLog.isDebug(Tweet.class)){
 						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.repetido", mTweet));
 					}
-					String tweet = getTweet();
-					tweet(tweet);//Pega outro tweet e envia.
+					tweet(getTweet());//Pega outro tweet e envia.
 				}else{
 					e.printStackTrace();
 				}

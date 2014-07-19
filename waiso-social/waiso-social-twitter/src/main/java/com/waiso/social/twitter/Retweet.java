@@ -1,10 +1,8 @@
 package com.waiso.social.twitter;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -22,18 +20,9 @@ public class Retweet extends Thread {
 	public Retweet(long time){
 		this.time = time;
 	}
-
-	public void start(){
-		AppTwitter.retweet.start();
-	}
-	
-	public void stop(long time){
-		AppTwitter.retweet.stop(time);
-	}
 	
 	@Override
-	@SuppressWarnings("resource")
-    public void run() {
+    public void run(){
 		while(true){
             try{
             	Calendar c = Calendar.getInstance();
@@ -41,20 +30,16 @@ public class Retweet extends Thread {
             	String dataFinal = DateUtils.getInstance().dateToString(c, "yyyy-MM-dd");
             	c.add(Calendar.DAY_OF_MONTH, -2);
             	String dataInicial = DateUtils.getInstance().dateToString(c, "yyyy-MM-dd");
-        		FileInputStream stream = new FileInputStream("/home/alberto/developer/workspace/workspace-waiso-social/waiso-social-git/waiso-social/waiso-social-twitter/src/main/resources/META-INF/twitter-txt/users-retweets");
-        		InputStreamReader reader = new InputStreamReader(stream);
-        		BufferedReader br = new BufferedReader(reader);
-        		String user = br.readLine();
-        		while(user != null) {
-        			if(GerenciadorLog.isDebug(Retweet.class)){
+        		List<String> usersRetweets = (new AppTxt()).getUsersRetweets();
+    			for(String user : usersRetweets){
+    				if(GerenciadorLog.isDebug(Retweet.class)){
 						GerenciadorLog.debug(Retweet.class, GerenciadorMensagem.getMessage("checking.timeline.user", user));
 					}
         			String mTweet = getLastTweet(dataInicial, dataFinal, user);
             		if(mTweet != null){
         				Tweet.addTweet(mTweet);
         			}
-        			user = br.readLine();
-        		}
+    			}
             	Retweet.sleep(time);
             }catch(Exception e){
                 e.printStackTrace();

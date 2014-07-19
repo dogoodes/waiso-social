@@ -10,26 +10,15 @@ public class User extends Thread {
 
 	//Pessoa que me segue, mas eu nao sigo ela...
 	private static LinkedList<Long> friendsNotFollowers = new LinkedList<Long>();
-	private static LinkedList<String> follow = new LinkedList<String>();
-	private static LinkedList<String> followDataUrl = new LinkedList<String>();
 	
 	//Eu sigo a pessoa, mas ela nao me segue...
 	private static LinkedList<Long> followersNotFriends = new LinkedList<Long>();
-	private static LinkedList<String> unfollow = new LinkedList<String>();
 	
 	private long time = 0;
 	
 	public User(){}
 	public User(long time){
 		this.time = time;
-	}
-	
-	public void start(){
-		AppTwitter.tweet.start();
-	}
-	
-	public void stop(long time){
-		AppTwitter.tweet.stop(time);
 	}
 	
 	@Override
@@ -43,9 +32,8 @@ public class User extends Thread {
             		Long idFriend = getIdFriend();
             		twitter4j.User user = appTwitter.follow(idFriend);
             		if(user != null){
-            			follow.add(user.getScreenName());
             			if(user.getURL() != null){
-            				followDataUrl.add(user.getURL());
+            				(new AppTxt()).writerUserUrl(user.getURL());
             			}
             		}
             	}
@@ -53,8 +41,7 @@ public class User extends Thread {
             	//Vou parar de seguir pessoa que eu sigo, mas ela nao me segue...
             	if(followersNotFriends.size() > 0){
             		Long idFollowers = getIdFollower();
-            		String twitter = appTwitter.unfollow(idFollowers);
-            		unfollow.add(twitter);
+            		appTwitter.unfollow(idFollowers);
             	}
                 Tweet.sleep(time);
             }catch(Exception e){
@@ -93,18 +80,6 @@ public class User extends Thread {
 	
 	public static void setFollowersNotFriends(LinkedList<Long> followersNotFriends) {
 		User.followersNotFriends = followersNotFriends;
-	}
-	
-	public static LinkedList<String> getFollow() {
-		return follow;
-	}
-	
-	public static LinkedList<String> getUnfollow() {
-		return unfollow;
-	}
-	
-	public static LinkedList<String> getFollowDataUrl() {
-		return followDataUrl;
 	}
 	
 	//Para seguir

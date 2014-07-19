@@ -26,6 +26,9 @@ public class GerenciadorMensagem {
 	
 	private static List<ResourceBundle> bundles = new ArrayList<ResourceBundle>();
 	static{
+		bundles.add(ResourceBundle.getBundle("Messages", new Locale(language)));
+		bundles.add(ResourceBundle.getBundle("MessagesErrors", new Locale(language)));
+		bundles.add(ResourceBundle.getBundle("MessagesErrorsBusiness", new Locale(language)));
 		bundles.add(ResourceBundle.getBundle("MessagesFramework", new Locale(language)));
 	}
 	
