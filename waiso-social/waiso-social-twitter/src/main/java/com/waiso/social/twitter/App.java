@@ -5,16 +5,16 @@ public class App {
 	public static void main(String[] args) {
 		//Pegar um tweet a cada intervalo de tempo determinado pelo cliente,
 		//e adiciona na fila de envio.
-		GetTweet getTweet = new GetTweet(Process.inOnehour.getTime());
+		GetTweet getTweet = new GetTweet(Process.in30Minutes.getTime());
 		getTweet.start();
 		
 		//Pegar o ultimo tweet enviado por um usuario com conteudo principal, dentro
 		//de um intervalo de tempo determinado pelo cliente, e adiciona na fila de envio.
-		Retweet retweet = new Retweet(Process.inOnehour.getTime());
+		Retweet retweet = new Retweet(Process.in40Minutes.getTime());
 		retweet.start();
 		
 		//Enviar um tweet na fila cada intervalo de tempo determinado pelo cliente.
-		Tweet tweet = new Tweet(Process.in10Minutes.getTime());
+		Tweet tweet = new Tweet(Process.in8Minutes.getTime());
 		tweet.start();
 		
 		//Pegar todo os usuarios que me segue e que eu sigo e compara.

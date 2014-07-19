@@ -22,6 +22,7 @@ public class GetTweet extends Thread {
     public void run() {
         while(true) {
             try{
+            	System.out.println(getTweet());
             	Tweet.addTweet(getTweet());
                 GetTweet.sleep(time);
             }catch(Exception e){

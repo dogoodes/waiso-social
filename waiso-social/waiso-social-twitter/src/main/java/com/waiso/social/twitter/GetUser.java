@@ -17,9 +17,9 @@ public class GetUser extends Thread {
     public void run() {
         while(true) {
             try{
-            	AppTwitter appTwitter = new AppTwitter();
-            	List<Long> idsFriends = appTwitter.getFriends(args);
-        		List<Long> idsFollowers = appTwitter.getFollowers(args);
+            	User user = new User();
+            	List<Long> idsFriends = user.getFriends(args);
+        		List<Long> idsFollowers = user.getFollowers(args);
         		
         		//Eu sigo a pessoa, mas ela nao me segue...
         		for(Long idsFollower : idsFollowers){
