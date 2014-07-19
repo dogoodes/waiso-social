@@ -127,7 +127,11 @@ public class User extends Thread {
 				}
 			}while((cursor = ids.getNextCursor()) != 0);
 		}catch(TwitterException e){
-			e.printStackTrace();
+			if(e.getErrorCode() == 88){
+				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
+			}else{
+				e.printStackTrace();
+			}
 		}
 		return idsFriends;
 	}
@@ -155,7 +159,11 @@ public class User extends Thread {
 				}
 			}while((cursor = ids.getNextCursor()) != 0);
 		}catch(TwitterException e){
-			e.printStackTrace();
+			if(e.getErrorCode() == 88){
+				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
+			}else{
+				e.printStackTrace();
+			}
 		}
 		return idsFollowers;
 	}
@@ -175,7 +183,11 @@ public class User extends Thread {
 				}
 	        }
 		}catch(TwitterException e){
-			e.printStackTrace();
+			if(e.getErrorCode() == 88){
+				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
+			}else{
+				e.printStackTrace();
+			}
 		}
 		return user;
 	}
@@ -207,7 +219,7 @@ public class User extends Thread {
 	        return user;
 		}catch(TwitterException e){
 			if(e.getErrorCode() == 88){
-				System.out.println(GerenciadorMensagem.getMessage("twitter.erro.limite"));
+				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
 			}else{
 				e.printStackTrace();
 			}

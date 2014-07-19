@@ -1,4 +1,4 @@
-package com.waiso.social.twitter;
+package com.waiso.social.framework;
 
 public enum Process {
 

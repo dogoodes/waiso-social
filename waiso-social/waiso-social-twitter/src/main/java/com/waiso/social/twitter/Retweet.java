@@ -7,6 +7,7 @@ import java.util.List;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
+import twitter4j.TwitterException;
 
 import com.waiso.social.framework.i18n.GerenciadorMensagem;
 import com.waiso.social.framework.log.GerenciadorLog;
@@ -71,6 +72,12 @@ public class Retweet extends Thread {
 					}
 				}
 				result = AppTwitter.getTwitter().search(query);
+			}
+		}catch(TwitterException e){
+			if(e.getErrorCode() == 88){
+				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
+			}else{
+				e.printStackTrace();
 			}
 		}catch(Exception e){
 			e.printStackTrace();

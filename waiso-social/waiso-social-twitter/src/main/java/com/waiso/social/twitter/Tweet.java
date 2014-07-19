@@ -65,24 +65,28 @@ public class Tweet extends Thread {
 	 */
 	public String getTweet(){
 		int posicao = tweets.size()-1;
-		String mTweet = tweets.get(posicao);
+		String tweet = tweets.get(posicao);
 		tweets.remove(posicao);
-		return mTweet;
+		return tweet;
 	}
 
-	public void tweet(String mTweet) {
+	public void tweet(String tweet) {
 		try{
 			try{
-				AppTwitter.getTwitter().updateStatus(mTweet);
+				AppTwitter.getTwitter().updateStatus(tweet);
 				if(GerenciadorLog.isDebug(Tweet.class)){
-					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.sent.sucess", mTweet));
+					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.sent.sucess", tweet));
 				}
 			}catch(TwitterException e){
 				if(e.getErrorCode() == 187){
 					if(GerenciadorLog.isDebug(Tweet.class)){
-						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.repetido", mTweet));
+						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.repeated", tweet));
 					}
 					tweet(getTweet());//Pega outro tweet e envia.
+				}else if(e.getErrorCode() == 88){
+					if(GerenciadorLog.isDebug(Tweet.class)){
+						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
+					}
 				}else{
 					e.printStackTrace();
 				}
