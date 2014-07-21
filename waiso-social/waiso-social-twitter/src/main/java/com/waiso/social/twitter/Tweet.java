@@ -26,17 +26,7 @@ public class Tweet extends Thread {
     public void run() {
         while(true) {
             try{
-            	if(Tweet.getTweets().size() > 0){
-        			String mTweet = getTweet();
-        			if(GerenciadorLog.isDebug(Tweet.class)){
-						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.sending", mTweet));
-					}
-        			tweet(mTweet);
-            	}else{
-            		if(GerenciadorLog.isDebug(Tweet.class)){
-						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("without.tweets"));
-					}
-            	}
+            	send();
                 Tweet.sleep(time);
             }catch(Exception e){
                 e.printStackTrace();
@@ -70,6 +60,23 @@ public class Tweet extends Thread {
 		return tweet;
 	}
 
+	/**
+	 * Metodo para enviar tweets na pilha.
+	 */
+	private void send(){
+		if(Tweet.getTweets().size() > 0){
+			String mTweet = getTweet();
+			if(GerenciadorLog.isDebug(Tweet.class)){
+				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.sending", mTweet));
+			}
+			tweet(mTweet);
+    	}else{
+    		if(GerenciadorLog.isDebug(Tweet.class)){
+				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("without.tweets"));
+			}
+    	}
+	}
+	
 	public void tweet(String tweet) {
 		try{
 			try{
@@ -82,7 +89,7 @@ public class Tweet extends Thread {
 					if(GerenciadorLog.isDebug(Tweet.class)){
 						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.repeated", tweet));
 					}
-					tweet(getTweet());//Pega outro tweet e envia.
+					send();//Pega outro tweet e envia.
 				}else if(e.getErrorCode() == 88){
 					if(GerenciadorLog.isDebug(Tweet.class)){
 						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
