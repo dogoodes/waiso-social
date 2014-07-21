@@ -47,7 +47,12 @@ public class User extends Thread {
             	//Vou parar de seguir pessoa que eu sigo, mas ela nao me segue...
             	if(followersNotFriends.size() > 0){
             		Long idFollowers = getIdFollower();
-            		unfollow(idFollowers);
+            		twitter4j.User user = unfollow(idFollowers);
+            		if(user != null){
+            			if(user.getURL() != null){
+            				(new AppTxt()).writerUserUrl(user.getURL());
+            			}
+            		}
             	}
                 Tweet.sleep(time);
             }catch(Exception e){
