@@ -12,7 +12,7 @@ public class App {
 		AppTwitter.getTwitter();//Estanciando chave...
 		
 		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
-		System.out.println("Thread 1");
+		System.out.println("Estanciando OAuthAuthorization");
 		
 		//Pegar um tweet a cada intervalo de tempo determinado pelo cliente,
 		//e adiciona na fila de envio.
