@@ -17,9 +17,8 @@ public class GetUser extends Thread {
     public void run() {
         while(true) {
             try{
-            	User user = new User();
-            	List<Long> idsFriends = user.getFriends(args);
-        		List<Long> idsFollowers = user.getFollowers(args);
+            	List<Long> idsFriends = (new User()).getFriends(args);
+        		List<Long> idsFollowers = (new User()).getFollowers(args);
         		
         		//Eu sigo a pessoa, mas ela nao me segue...
         		for(Long idsFollower : idsFollowers){

@@ -31,7 +31,7 @@ public class App {
 		System.out.println("Thread 2");
 		
 		//Enviar um tweet na fila cada intervalo de tempo determinado pelo cliente.
-		Tweet tweet = new Tweet(Process.in8Minutes.getTime());
+		Tweet tweet = new Tweet(Process.in10Minutes.getTime());
 		tweet.start();
 		
 		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
@@ -51,5 +51,7 @@ public class App {
 		//de um intervalo de tempo determinado pelo cliente.
 		User user = new User(Process.in20Seconds.getTime());
 		user.start();
+		
+		System.out.println("Thread 5");
 	}
 }
