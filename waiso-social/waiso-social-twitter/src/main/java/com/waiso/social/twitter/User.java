@@ -47,7 +47,7 @@ public class User extends Thread {
             	//Vou parar de seguir pessoa que eu sigo, mas ela nao me segue...
             	if(followersNotFriends.size() > 0){
             		Long idFollowers = getIdFollower();
-            		twitter4j.User user = unfollow(idFollowers, false);
+            		twitter4j.User user = unfollow(idFollowers);
             		if(user != null){
             			if(user.getURL() != null){
             				(new AppTxt()).writerUserUrl(user.getURL());
@@ -197,7 +197,7 @@ public class User extends Thread {
 		return user;
 	}
 	
-	public twitter4j.User unfollow(long id, Boolean isValid){
+	public twitter4j.User unfollow(long id){
 		try{
 			twitter4j.User user = AppTwitter.getTwitter().showUser(id);
 			AppTwitter.log(user);
@@ -210,9 +210,8 @@ public class User extends Thread {
         			break;
         		}
 			}
-			//Caso seja um usuario que eu sigo e ele nao me segue, nao precisa nem verificar a 
-			//porcentagem de seguidores...
-	        if(!isValid || (isValid &&!isUsuarioPrincipal && porcentagemSeguindo.intValue() < 25)){
+			//Caso seja um usuario que eu sigo e ele nao me segue, nao precisa nem verificar a porcentagem de seguidores...
+	        if(!isUsuarioPrincipal){
 	        	AppTwitter.getTwitter().destroyFriendship(id);
 	        	if(GerenciadorLog.isDebug(Tweet.class)){
 					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("percentage.followers", porcentagemSeguindo));
