@@ -1,5 +1,6 @@
 package com.waiso.social.facebook;
 
+import com.waiso.social.framework.configuracao.GerenciadorConfiguracao;
 import com.waiso.social.framework.log.GerenciadorLog;
 
 import facebook4j.Account;
@@ -8,7 +9,7 @@ import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 import facebook4j.ResponseList;
 import facebook4j.User;
-import facebook4j.auth.AccessToken;
+import facebook4j.conf.ConfigurationBuilder;
 
 public class AppFacebook {
 
@@ -16,11 +17,25 @@ public class AppFacebook {
 	private final static Integer indexPageWaisoTI = 0;
 	
 	public static Facebook getFacebook(){
-		if(facebook != null){
-			Facebook facebook = new FacebookFactory().getInstance();
-			facebook.setOAuthAppId("appId", "appSecret");
-			facebook.setOAuthPermissions("commaSeparetedPermissions");
-			facebook.setOAuthAccessToken(new AccessToken("accessToken", null));
+		if(AppFacebook.facebook == null){
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			
+			cb.setDebugEnabled(true);
+			
+			String appId = GerenciadorConfiguracao.getConfiguracao("facebook.oauth.appId");
+			cb.setOAuthAppId(appId);
+			
+			String appSecret = GerenciadorConfiguracao.getConfiguracao("facebook.oauth.appSecret");
+			cb.setOAuthAppSecret(appSecret);
+			
+			String accessToken = GerenciadorConfiguracao.getConfiguracao("facebook.oauth.accessToken");
+			cb.setOAuthAccessToken(accessToken);
+			
+			String permissions = GerenciadorConfiguracao.getConfiguracao("facebook.oauth.permissions");
+			cb.setOAuthPermissions(permissions);
+
+			Facebook facebook = (new FacebookFactory(cb.build())).getInstance();
+			AppFacebook.facebook = facebook;
 		}
 		return AppFacebook.facebook;
 	}

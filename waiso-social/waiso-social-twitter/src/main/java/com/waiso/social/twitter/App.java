@@ -11,31 +11,31 @@ public class App {
 	public static void main(String[] args) throws InterruptedException {
 		AppTwitter.getTwitter();//Estanciando chave...
 		
-		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
 		System.out.println("Estanciando OAuthAuthorization");
+		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
 		
 		//Pegar um tweet a cada intervalo de tempo determinado pelo cliente,
 		//e adiciona na fila de envio.
 		GetTweet getTweet = new GetTweet(Process.in30Minutes.getTime());
 		getTweet.start();
 		
-		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
 		System.out.println("Thread 1");
+		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
 		
 		//Pegar o ultimo tweet enviado por um usuario com conteudo principal, dentro
 		//de um intervalo de tempo determinado pelo cliente, e adiciona na fila de envio.
 		Retweet retweet = new Retweet(Process.in40Minutes.getTime());
 		retweet.start();
 		
-		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
 		System.out.println("Thread 2");
+		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
 		
 		//Enviar um tweet na fila cada intervalo de tempo determinado pelo cliente.
 		Tweet tweet = new Tweet(Process.in10Minutes.getTime());
 		tweet.start();
 		
-		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
 		System.out.println("Thread 3");
+		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
 		
 		//Pegar todo os usuarios que me segue e que eu sigo e compara.
 		//Segue a pessoa que me segue, mas eu nao sigo ela... Adiciona na fila para acao.
@@ -44,8 +44,8 @@ public class App {
 		GetUser getUser = new GetUser(Process.in3hours.getTime(), args);
 		getUser.start();
 		
-		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
 		System.out.println("Thread 4");
+		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
 		
 		//Pega a fila de usuario para seguir ou deixar de seguir e executa a acao, dentro
 		//de um intervalo de tempo determinado pelo cliente.

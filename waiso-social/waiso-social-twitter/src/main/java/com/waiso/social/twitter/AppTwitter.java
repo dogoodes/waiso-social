@@ -6,16 +6,13 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.OAuthAuthorization;
 import twitter4j.conf.ConfigurationBuilder;
 
+import com.waiso.social.framework.configuracao.GerenciadorConfiguracao;
 import com.waiso.social.framework.i18n.GerenciadorMensagem;
 import com.waiso.social.framework.log.GerenciadorLog;
 
 public class AppTwitter {
 
 	private static Twitter twitter = null;
-	private static final String ACCESS_TOKEN = "2457262974-0bDCCPwhgpEQRTqhPz1rEUoaYO1w7fF2C5uMAsa";
-	private static final String ACCESS_TOKEN_SECRET = "xgtXUDMm6lUgthE4JgNkTiIYWd78zqt47hMZ3MKdhmI3r";
-	private static final String CONSUMER_KEY = "F5ho1ydKgobrfLIgx1nhysgXK";
-	private static final String CONSUMER_SECRET = "WD33Teamn4E3UUGhxPGQML51DeSyLxPxMoQhkWF61i2w199mqj";
 
 	public static Double calculoPorcentagemSeguindo(Integer seguidores, Integer seguindo){
 		return (double) ((100*seguindo)/(seguidores));
@@ -23,14 +20,24 @@ public class AppTwitter {
 
 	public static Twitter getTwitter(){
 		if(AppTwitter.twitter == null){
-			ConfigurationBuilder builder = new ConfigurationBuilder();
-			builder.setOAuthAccessToken(ACCESS_TOKEN);
-			builder.setOAuthAccessTokenSecret(ACCESS_TOKEN_SECRET);
-			builder.setOAuthConsumerKey(CONSUMER_KEY);
-			builder.setOAuthConsumerSecret(CONSUMER_SECRET);
-			OAuthAuthorization auth = new OAuthAuthorization(builder.build());
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			
+			String accessToken = GerenciadorConfiguracao.getConfiguracao("twitter.oauth.accessToken");
+			cb.setOAuthAccessToken(accessToken);
+			
+			String accessTokenSecret = GerenciadorConfiguracao.getConfiguracao("twitter.oauth.accessToken");
+			cb.setOAuthAccessTokenSecret(accessTokenSecret);
+			
+			String consumerKey = GerenciadorConfiguracao.getConfiguracao("twitter.oauth.consumerKey");
+			cb.setOAuthAccessTokenSecret(consumerKey);
+			
+			String consumerSecret = GerenciadorConfiguracao.getConfiguracao("twitter.oauth.consumerSecret");
+			cb.setOAuthAccessTokenSecret(consumerSecret);
+			
+			OAuthAuthorization auth = new OAuthAuthorization(cb.build());
+			
 			Twitter twitter = (new TwitterFactory()).getInstance(auth);
-			twitter.setOAuthAccessToken(new AccessToken(ACCESS_TOKEN, ACCESS_TOKEN_SECRET));
+			twitter.setOAuthAccessToken(new AccessToken(accessToken, accessTokenSecret));
 			AppTwitter.twitter = twitter;
 		}
 		return AppTwitter.twitter;
