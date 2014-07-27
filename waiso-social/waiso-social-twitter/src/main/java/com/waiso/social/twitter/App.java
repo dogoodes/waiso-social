@@ -12,7 +12,7 @@ public class App {
 		AppTwitter.getTwitter();//Estanciando chave...
 		
 		System.out.println("Estanciando OAuthAuthorization");
-		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
+		new Thread().sleep(Process.in10Seconds.getTime());//Esperar 10 segundos.
 		
 		//Pegar um tweet a cada intervalo de tempo determinado pelo cliente,
 		//e adiciona na fila de envio.
@@ -20,7 +20,7 @@ public class App {
 		getTweet.start();
 		
 		System.out.println("Thread 1");
-		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
+		new Thread().sleep(Process.in10Seconds.getTime());//Esperar 10 segundos.
 		
 		//Pegar o ultimo tweet enviado por um usuario com conteudo principal, dentro
 		//de um intervalo de tempo determinado pelo cliente, e adiciona na fila de envio.
@@ -28,14 +28,14 @@ public class App {
 		retweet.start();
 		
 		System.out.println("Thread 2");
-		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
+		new Thread().sleep(Process.in10Seconds.getTime());//Esperar 10 segundos.
 		
 		//Enviar um tweet na fila cada intervalo de tempo determinado pelo cliente.
 		Tweet tweet = new Tweet(Process.in10Minutes.getTime());
 		tweet.start();
 		
 		System.out.println("Thread 3");
-		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
+		new Thread().sleep(Process.in10Seconds.getTime());//Esperar 10 segundos.
 		
 		//Pegar todo os usuarios que me segue e que eu sigo e compara.
 		//Segue a pessoa que me segue, mas eu nao sigo ela... Adiciona na fila para acao.
@@ -45,7 +45,7 @@ public class App {
 		getUser.start();
 		
 		System.out.println("Thread 4");
-		new Thread().sleep(10 * 1000);//Esperar 10 segundos.
+		new Thread().sleep(Process.in10Seconds.getTime());//Esperar 10 segundos.
 		
 		//Pega a fila de usuario para seguir ou deixar de seguir e executa a acao, dentro
 		//de um intervalo de tempo determinado pelo cliente.
@@ -53,5 +53,16 @@ public class App {
 		user.start();
 		
 		System.out.println("Thread 5");
+		new Thread().sleep(Process.in10Seconds.getTime());//Esperar 10 segundos.
+		
+		(new App()).sendInfo();
+	}
+
+	@SuppressWarnings("static-access")
+	private void sendInfo()  throws InterruptedException {
+		while(true){
+			(new Tweet()).tweet("Me adicionem no Facebook? https://www.facebook.com/waisoti - Em breve teremos novidades!!! =)");
+			new Thread().sleep(Process.inOnehour.getTime());
+		}
 	}
 }
