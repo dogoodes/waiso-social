@@ -62,7 +62,7 @@ public class App {
 	private void sendInfo()  throws InterruptedException {
 		while(true){
 			(new Tweet()).tweet("Me adicionem no Facebook? https://www.facebook.com/waisoti - Em breve teremos novidades!!! =)");
-			new Thread().sleep(Process.inOnehour.getTime());
+			new Thread().sleep(Process.in3hours.getTime());
 		}
 	}
 }
