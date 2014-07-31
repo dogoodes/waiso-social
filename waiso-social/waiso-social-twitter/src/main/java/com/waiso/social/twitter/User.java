@@ -38,6 +38,9 @@ public class User extends Thread {
             		Long idFriend = getIdFriend();
             		twitter4j.User user = follow(idFriend);
             		if(user != null){
+            			String tweetThanks = GerenciadorMensagem.getMessage("thanks.for.follow.us", ("@"+user.getScreenName()));
+            			(new Tweet()).tweet(tweetThanks);//Agradecendo usuario...
+
             			if(user.getURL() != null){
             				(new AppTxt()).writerUserUrl(user.getURL());
             			}
