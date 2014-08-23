@@ -1,0 +1,9 @@
+-Tweets para postagens:
+Pegar um tweet a cada intervalo de tempo, e adiciona na fila de envio.
+Pegar o ultimo tweet enviado por um usuario com conteudo principal, dentro de um intervalo de tempo, e adiciona na fila de envio.
+
+-Seguindo e desfasendo amizade:
+Pegar todo os usuarios que me segue e que eu sigo e compara.
+1- Segue a pessoa que me segue, mas eu nao sigo ela... Adiciona na fila para acao.
+2- Para de seguir a pessoa que eu sigo, mas ela nao me segue... Adiciona na fila para acao.
+3- Executa a acao dentro de um intervalo de tempo.

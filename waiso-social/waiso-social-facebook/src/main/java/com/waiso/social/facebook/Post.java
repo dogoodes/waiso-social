@@ -3,8 +3,7 @@ package com.waiso.social.facebook;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.waiso.social.framework.i18n.GerenciadorMensagem;
-import com.waiso.social.framework.log.GerenciadorLog;
+import com.waiso.social.framework.Utils;
 
 import facebook4j.FacebookException;
 import facebook4j.PostUpdate;
@@ -23,16 +22,10 @@ public class Post extends Thread {
     public void run() {
         while(true) {
             try{
-            	if(Post.getPosts().size() > 0){
-        			String post = getPost();
-        			if(GerenciadorLog.isDebug(Post.class)){
-						GerenciadorLog.debug(Post.class, GerenciadorMensagem.getMessage("post.sending", post));
-					}
-        			post(post);
-            	}else{
-            		if(GerenciadorLog.isDebug(Post.class)){
-						GerenciadorLog.debug(Post.class, GerenciadorMensagem.getMessage("without.posts"));
-					}
+            	if (Post.getPosts().size() > 0) {
+        			post();
+            	} else {
+            		Utils.log("without.posts");
             	}
                 Post.sleep(time);
             }catch(Exception e){
@@ -60,24 +53,24 @@ public class Post extends Thread {
 	/**
 	 * Posts na memoria. Seram enviados de acordo com a ordem da fila.
 	 */
-	public String getPost(){
+	public String getPost() {
 		int posicao = posts.size()-1;
 		String post = posts.get(posicao);
 		posts.remove(posicao);
 		return post;
 	}
 
-	public void post(String post) {
-		try{
-			try{
+	public void post() {
+		try {
+			try {
+				String post = getPost();
+				Utils.log("post.sending", post);
 				AppFacebook.getFacebook().postFeed(new PostUpdate(post));
-				if(GerenciadorLog.isDebug(Post.class)){
-					GerenciadorLog.debug(Post.class, GerenciadorMensagem.getMessage("post.sent.sucess", post));
-				}
-			}catch(FacebookException e){
+				Utils.log("post.sent.sucess", post);
+			} catch (FacebookException e) {
 				e.printStackTrace();
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

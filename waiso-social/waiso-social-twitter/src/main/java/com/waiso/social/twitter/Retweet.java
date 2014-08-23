@@ -9,8 +9,7 @@ import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
-import com.waiso.social.framework.i18n.GerenciadorMensagem;
-import com.waiso.social.framework.log.GerenciadorLog;
+import com.waiso.social.framework.Utils;
 import com.waiso.social.framework.utilitario.DateUtils;
 
 public class Retweet extends Thread {  
@@ -33,9 +32,7 @@ public class Retweet extends Thread {
             	String dataInicial = DateUtils.getInstance().dateToString(c, "yyyy-MM-dd");
         		List<String> usersRetweets = (new AppTxt()).getUsersRetweets();
     			for(String user : usersRetweets){
-    				if(GerenciadorLog.isDebug(Retweet.class)){
-						GerenciadorLog.debug(Retweet.class, GerenciadorMensagem.getMessage("checking.timeline.user", user));
-					}
+    				Utils.log("checking.timeline.user", user);
         			String mTweet = getLastTweet(dataInicial, dataFinal, user);
             		if(mTweet != null){
         				Tweet.addTweet(mTweet);
@@ -64,9 +61,7 @@ public class Retweet extends Thread {
 					//Se a data do twitter for maior que a global, significa
 					//que o twitter pode ser o ultimo postado pelo usuario.
 					if(dataCriacao.after(data)){
-						if(GerenciadorLog.isDebug(Tweet.class)){
-							GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("catching.last.tweet.user", usuario));
-						}
+						Utils.log("catching.last.tweet.user", usuario);
 						mTweet = status.getText();
 						data = dataCriacao;
 					}
@@ -75,7 +70,7 @@ public class Retweet extends Thread {
 			}
 		}catch(TwitterException e){
 			if(e.getErrorCode() == 88){
-				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
+				Utils.log("twitter.error.limit");
 			}else{
 				e.printStackTrace();
 			}

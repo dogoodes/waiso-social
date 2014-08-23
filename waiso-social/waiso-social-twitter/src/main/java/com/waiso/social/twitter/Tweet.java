@@ -5,6 +5,7 @@ import java.util.List;
 
 import twitter4j.TwitterException;
 
+import com.waiso.social.framework.Utils;
 import com.waiso.social.framework.i18n.GerenciadorMensagem;
 import com.waiso.social.framework.log.GerenciadorLog;
 
@@ -66,14 +67,10 @@ public class Tweet extends Thread {
 	private void send(){
 		if(Tweet.getTweets().size() > 0){
 			String mTweet = getTweet();
-			if(GerenciadorLog.isDebug(Tweet.class)){
-				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.sending", mTweet));
-			}
+			Utils.log("tweet.sending", mTweet);
 			tweet(mTweet);
     	}else{
-    		if(GerenciadorLog.isDebug(Tweet.class)){
-				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("without.tweets"));
-			}
+    		Utils.log("without.tweets");
     	}
 	}
 	
@@ -81,19 +78,13 @@ public class Tweet extends Thread {
 		try{
 			try{
 				AppTwitter.getTwitter().updateStatus(tweet);
-				if(GerenciadorLog.isDebug(Tweet.class)){
-					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.sent.sucess", tweet));
-				}
+				Utils.log("tweet.sent.sucess", tweet);
 			}catch(TwitterException e){
 				if(e.getErrorCode() == 187){
-					if(GerenciadorLog.isDebug(Tweet.class)){
-						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("tweet.repeated", tweet));
-					}
+					Utils.log("tweet.repeated", tweet);
 					send();//Pega outro tweet e envia.
 				}else if(e.getErrorCode() == 88){
-					if(GerenciadorLog.isDebug(Tweet.class)){
-						GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
-					}
+					Utils.log("twitter.error.limit");
 				}else{
 					e.printStackTrace();
 				}

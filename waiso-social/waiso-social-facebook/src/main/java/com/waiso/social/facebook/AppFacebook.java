@@ -1,14 +1,12 @@
 package com.waiso.social.facebook;
 
 import com.waiso.social.framework.configuracao.GerenciadorConfiguracao;
-import com.waiso.social.framework.log.GerenciadorLog;
 
 import facebook4j.Account;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 import facebook4j.ResponseList;
-import facebook4j.User;
 import facebook4j.conf.ConfigurationBuilder;
 
 public class AppFacebook {
@@ -44,13 +42,6 @@ public class AppFacebook {
 		ResponseList<Account> accounts = facebook.getAccounts();
 		Account yourPageAccount = accounts.get(indexPage);//if index 0 is your page account.
 		return yourPageAccount.getAccessToken();
-	}
-	
-	public static void log(User user){
-		if(GerenciadorLog.isDebug(AppFacebook.class)){
-			GerenciadorLog.debug(AppFacebook.class, "");
-			GerenciadorLog.debug(AppFacebook.class, "");
-		}
 	}
 
 	public static Integer getIndexpagewaisoti() {

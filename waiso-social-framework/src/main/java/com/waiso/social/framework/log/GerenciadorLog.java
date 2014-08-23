@@ -57,7 +57,7 @@ public class GerenciadorLog {
 	}
 
 	public static boolean isDebug(Class clazz) {
-		return clazz.getSimpleName().matches("(App|AppTwitter|Users|Tweet|Retweet|Post)");
+		return clazz.getSimpleName().matches("(Utils)");
 	}
 
 	public static boolean isInfo(Class clazz) {

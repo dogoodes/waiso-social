@@ -1,25 +1,57 @@
 package com.waiso.social.facebook;
 
+import com.waiso.social.framework.Process;
+
+import facebook4j.Comment;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
-import facebook4j.internal.org.json.JSONArray;
-import facebook4j.internal.org.json.JSONException;
-import facebook4j.internal.org.json.JSONObject;
+import facebook4j.PagableList;
+import facebook4j.Post;
+import facebook4j.ResponseList;
 
 public class App {
 	
-	public static void main(String[] args) throws FacebookException, JSONException {
+	public static void main(String[] args) throws FacebookException {
 		Facebook facebook = AppFacebook.getFacebook();
-		/*
+		
 		ResponseList<Post> posts = facebook.getHome();
 		for (Post post : posts) {
 			String postMessage = post.getMessage();
 			System.out.println(postMessage);
+			
+			PagableList<Comment> comments = post.getComments();
+			for (Comment comment : comments) {
+				System.out.println(comment.getMessage());
+			}
+			
+			String postName = post.getName();
+			System.out.println(postName);
+					
 			if(postMessage != null){
-				facebook.likePost(post.getId());
+				//facebook.likePost(post.getId());
 			}
 		}
-		*/
+	}
+	
+	@SuppressWarnings("static-access")
+	public static void main1(String[] args) throws InterruptedException {
+		AppFacebook.getFacebook();
+		
+		System.out.println("Estanciando OAuthAuthorization");
+		new Thread().sleep(Process.in10Seconds.getTime());
+		
+		GetPost getPost = new GetPost(Process.in30Minutes.getTime());
+		getPost.start();
+		
+		System.out.println("Thread 1");
+		new Thread().sleep(Process.in10Seconds.getTime());
+		
+		Like like = new Like(Process.in5Seconds.getTime());
+		like.start();
+		
+		System.out.println("Thread 2");
+		new Thread().sleep(Process.in10Seconds.getTime());
+		
 		/*
 		ResponseList<Post> posts = facebook.searchPosts("techo");
 		for (Post post : posts) {
@@ -72,7 +104,7 @@ public class App {
 	*/	
 		
 		//String query = "SELECT uid2 FROM friend WHERE uid1=me()";
-		String query = "SELECT notification_id, sender_id, app_id, icon_url, title_html, body_html, href FROM notification WHERE recipient_id=me() AND is_unread = 1 AND is_hidden = 0";
+		/*String query = "SELECT notification_id, sender_id, app_id, icon_url, title_html, body_html, href FROM notification WHERE recipient_id=me() AND is_unread = 1 AND is_hidden = 0";
 		JSONArray jsonArray = facebook.executeFQL(query);
 		for (int i = 0; i < jsonArray.length(); i++) {
 		    JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -81,7 +113,7 @@ public class App {
 				facebook.likePost(notificationId);
 			}
 		}
-		
+		*/
 		
 		/*
 		ResponseList<Account> accounts = facebook.getAccounts();

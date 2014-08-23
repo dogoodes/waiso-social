@@ -8,6 +8,7 @@ import twitter4j.IDs;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
+import com.waiso.social.framework.Utils;
 import com.waiso.social.framework.i18n.GerenciadorMensagem;
 import com.waiso.social.framework.log.GerenciadorLog;
 
@@ -114,9 +115,7 @@ public class User extends Thread {
 	
 	public List<Long> getFriends(String[] args){
 		List<Long> idsFriends = new ArrayList<Long>();
-		if(GerenciadorLog.isDebug(AppTwitter.class)){
-			GerenciadorLog.debug(AppTwitter.class, GerenciadorMensagem.getMessage("initial.find.user", "Seguidores", "Friends"));
-		}
+		Utils.log("initial.find.user", "Seguidores", "Friends");
 		try{
 			Twitter twitter = AppTwitter.getTwitter();
 			long cursor = -1;
@@ -127,16 +126,14 @@ public class User extends Thread {
 				}else{
 					ids = twitter.getFriendsIDs(cursor);
 				}
-				if(GerenciadorLog.isDebug(AppTwitter.class)){
-					GerenciadorLog.debug(AppTwitter.class, GerenciadorMensagem.getMessage("count.find.user", ids.getIDs().length, "Seguidores", "Friends"));
-				}
+				Utils.log("count.find.user", ids.getIDs().length, "Seguidores", "Friends");
 				for(long id : ids.getIDs()){
 					idsFriends.add(id);
 				}
 			}while((cursor = ids.getNextCursor()) != 0);
 		}catch(TwitterException e){
 			if(e.getErrorCode() == 88){
-				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
+				Utils.log("twitter.error.limit");
 			}else{
 				e.printStackTrace();
 			}
@@ -146,30 +143,28 @@ public class User extends Thread {
 	
 	public List<Long> getFollowers(String[] args){
 		List<Long> idsFollowers = new ArrayList<Long>();
-		if(GerenciadorLog.isDebug(AppTwitter.class)){
-			GerenciadorLog.debug(AppTwitter.class, GerenciadorMensagem.getMessage("initial.find.user", "Seguidos", "Followers"));
-		}
+		Utils.log("initial.find.user", "Seguidos", "Followers");
 		try{
 			Twitter twitter = AppTwitter.getTwitter();
 			long cursor = -1;
 			IDs ids;
-			do{
-				if(0 < args.length){
+			do {
+				if (0 < args.length) {
 					ids = twitter.getFollowersIDs(args[0], cursor);
-				}else{
+				} else {
 					ids = twitter.getFollowersIDs(cursor);
 				}
-				if(GerenciadorLog.isDebug(AppTwitter.class)){
-					GerenciadorLog.debug(AppTwitter.class, GerenciadorMensagem.getMessage("count.find.user", ids.getIDs().length, "Seguidos", "Followers"));
+				if (GerenciadorLog.isDebug(AppTwitter.class)) {
+					Utils.log("count.find.user", ids.getIDs().length, "Seguidos", "Followers");
 				}
-				for(long id : ids.getIDs()){
+				for (long id : ids.getIDs()) {
 					idsFollowers.add(id);
 				}
-			}while((cursor = ids.getNextCursor()) != 0);
+			} while ((cursor = ids.getNextCursor()) != 0);
 		}catch(TwitterException e){
-			if(e.getErrorCode() == 88){
-				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
-			}else{
+			if (e.getErrorCode() == 88) {
+				Utils.log("twitter.error.limit");
+			} else {
 				e.printStackTrace();
 			}
 		}
@@ -186,8 +181,8 @@ public class User extends Thread {
 	        if(porcentagemSeguindo.intValue() > 25 && !user.isFollowRequestSent()){
 	        	AppTwitter.getTwitter().createFriendship(id);
 	        	if(GerenciadorLog.isDebug(Tweet.class)){
-					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("percentage.followers", porcentagemSeguindo));
-					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("building.friendship", user.getScreenName()));
+	        		Utils.log("percentage.followers", porcentagemSeguindo);
+	        		Utils.log("building.friendship", user.getScreenName());
 				}
 	        }
 		}catch(TwitterException e){
@@ -216,19 +211,17 @@ public class User extends Thread {
 			//Caso seja um usuario que eu sigo e ele nao me segue, nao precisa nem verificar a porcentagem de seguidores...
 	        if(!isUsuarioPrincipal){
 	        	AppTwitter.getTwitter().destroyFriendship(id);
-	        	if(GerenciadorLog.isDebug(Tweet.class)){
-					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("percentage.followers", porcentagemSeguindo));
-					GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("undoing.friendship", user.getScreenName()));
-				}
+	        	Utils.log("percentage.followers", porcentagemSeguindo);
+	        	Utils.log("undoing.friendship", user.getScreenName());
 	        }
 	        if(isUsuarioPrincipal){
-	        	GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("percentage.followers", porcentagemSeguindo));
-	        	GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("user.main.content"));
+	        	Utils.log("percentage.followers", porcentagemSeguindo);
+	        	Utils.log("user.main.content");
 	        }
 	        return user;
 		}catch(TwitterException e){
 			if(e.getErrorCode() == 88){
-				GerenciadorLog.debug(Tweet.class, GerenciadorMensagem.getMessage("twitter.error.limit"));
+				Utils.log("twitter.error.limit");
 			}else{
 				e.printStackTrace();
 			}
