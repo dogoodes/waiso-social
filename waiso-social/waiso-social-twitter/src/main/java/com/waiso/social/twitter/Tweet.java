@@ -6,8 +6,6 @@ import java.util.List;
 import twitter4j.TwitterException;
 
 import com.waiso.social.framework.Utils;
-import com.waiso.social.framework.i18n.GerenciadorMensagem;
-import com.waiso.social.framework.log.GerenciadorLog;
 
 /**
  * Thread responsavel por enviar um tweet a cada

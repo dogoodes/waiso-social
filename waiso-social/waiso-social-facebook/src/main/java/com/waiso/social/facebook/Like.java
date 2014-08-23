@@ -24,9 +24,13 @@ public class Like extends Thread {
             try{
             	if (postIds.size() > 0) {
             		likePost();
+            	} else {
+            		Utils.log("without.list", "Post");
             	}
             	if (commentIds.size() > 0) {
             		likeComment();
+            	} else {
+            		Utils.log("without.list", "Comment");
             	}
                 Like.sleep(time);
             }catch(Exception e){

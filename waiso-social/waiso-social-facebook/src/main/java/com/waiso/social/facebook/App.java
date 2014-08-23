@@ -10,7 +10,7 @@ import facebook4j.Post;
 import facebook4j.ResponseList;
 
 public class App {
-	
+	/*
 	public static void main(String[] args) throws FacebookException {
 		Facebook facebook = AppFacebook.getFacebook();
 		
@@ -32,9 +32,9 @@ public class App {
 			}
 		}
 	}
-	
+	*/
 	@SuppressWarnings("static-access")
-	public static void main1(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException {
 		AppFacebook.getFacebook();
 		
 		System.out.println("Estanciando OAuthAuthorization");

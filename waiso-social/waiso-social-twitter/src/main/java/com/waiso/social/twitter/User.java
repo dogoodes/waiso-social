@@ -33,33 +33,36 @@ public class User extends Thread {
 	@Override
     public void run() {
         while(true) {
-            try{
+            try {
             	//Vou seguir pessoa que me segue, mas eu nao sigo ela... 
-            	if(friendsNotFollowers.size() > 0){
+            	if (friendsNotFollowers.size() > 0) {
             		Long idFriend = getIdFriend();
             		twitter4j.User user = follow(idFriend);
-            		if(user != null){
+            		if (user != null) {
             			String tweetThanks = GerenciadorMensagem.getMessage("thanks.for.follow.us", ("@"+user.getScreenName()));
             			(new Tweet()).tweet(tweetThanks);//Agradecendo usuario...
 
-            			if(user.getURL() != null){
-            				(new AppTxt()).writerUserUrl(user.getURL());
+            			String url = user.getURL();
+            			if (url != null) {
+            				if (url.toLowerCase().indexOf("linkedin") != -1 || url.toLowerCase().indexOf("facebook") != -1) {
+            					(new AppTxt()).writerUserUrl(url);
+            				}
             			}
             		}
             	}
             	
             	//Vou parar de seguir pessoa que eu sigo, mas ela nao me segue...
-            	if(followersNotFriends.size() > 0){
+            	if (followersNotFriends.size() > 0) {
             		Long idFollowers = getIdFollower();
             		twitter4j.User user = unfollow(idFollowers);
-            		if(user != null){
-            			if(user.getURL() != null){
+            		if (user != null) {
+            			if (user.getURL() != null) {
             				(new AppTxt()).writerUserUrl(user.getURL());
             			}
             		}
             	}
                 Tweet.sleep(time);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
