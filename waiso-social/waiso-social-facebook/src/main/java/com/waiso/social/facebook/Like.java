@@ -100,6 +100,9 @@ public class Like extends Thread {
 			AppFacebook.getFacebook().likePost(postId);
 			Utils.log("liked.post.sucess", postId);
 		} catch (FacebookException e) {
+			if (e.getErrorCode() == 100) {
+				Utils.log("already.liked", "Post");
+			}
 			e.printStackTrace();
 		}
 	}
@@ -111,6 +114,9 @@ public class Like extends Thread {
 			AppFacebook.getFacebook().likeComment(commentId);
 			Utils.log("liked.sucess", "Comment", commentId);
 		} catch (FacebookException e) {
+			if (e.getErrorCode() == 100) {
+				Utils.log("already.liked", "Comment");
+			}
 			e.printStackTrace();
 		}
 	}
