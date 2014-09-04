@@ -48,6 +48,5 @@ public class GetPost extends Thread {
 		} catch (FacebookException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }
