@@ -11,13 +11,13 @@ public class App {
 		System.out.println("Estanciando OAuthAuthorization");
 		new Thread().sleep(Process.in10Seconds.getTime());
 		
-		GetPost getPost = new GetPost(Process.in30Minutes.getTime());
+		GetPost getPost = new GetPost(Process.in10Minutes.getTime());
 		getPost.start();
 		
 		System.out.println("Thread 1");
 		new Thread().sleep(Process.in10Seconds.getTime());
 		
-		Like like = new Like(Process.in5Seconds.getTime());
+		Like like = new Like(Process.in3Seconds.getTime());
 		like.start();
 		
 		System.out.println("Thread 2");

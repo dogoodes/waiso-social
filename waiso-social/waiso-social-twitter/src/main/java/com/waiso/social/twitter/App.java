@@ -21,7 +21,7 @@ public class App {
 		retweet.start();
 		
 		System.out.println("Thread 2");
-		new Thread().sleep(Process.in15Seconds.getTime());
+		new Thread().sleep(Process.in10Seconds.getTime());
 		
 		Tweet tweet = new Tweet(Process.in10Minutes.getTime());
 		tweet.start();
