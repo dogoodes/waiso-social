@@ -29,6 +29,8 @@ public class Teste {
 	 * 		}
 	 * 
 	 * http://www.devmedia.com.br/leitura-e-escrita-de-arquivos-json-em-java/27663
+	 * 
+	 * Precisa verificar grupo por grupos as regras de cada uma.
 	 */
 	public static void main(String[] args) throws FacebookException {
 		/* IMPLEMENTACAO CORRETA!!!
