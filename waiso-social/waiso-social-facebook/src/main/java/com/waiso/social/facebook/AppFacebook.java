@@ -18,7 +18,8 @@ public class AppFacebook {
 		if(AppFacebook.facebook == null){
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			
-			cb.setDebugEnabled(true);
+			Boolean debug = Boolean.valueOf(GerenciadorConfiguracao.getConfiguracao("facebook.debug"));
+			cb.setDebugEnabled(debug);
 			
 			String appId = GerenciadorConfiguracao.getConfiguracao("facebook.oauth.appId");
 			cb.setOAuthAppId(appId);
