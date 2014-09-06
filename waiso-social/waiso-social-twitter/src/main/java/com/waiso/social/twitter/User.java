@@ -8,6 +8,7 @@ import twitter4j.IDs;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
+import com.waiso.social.framework.FileUtils;
 import com.waiso.social.framework.Utils;
 import com.waiso.social.framework.i18n.GerenciadorMensagem;
 import com.waiso.social.framework.log.GerenciadorLog;
@@ -204,7 +205,7 @@ public class User extends Thread {
 			AppTwitter.log(user);
 	        Double porcentagemSeguindo = AppTwitter.calculoPorcentagemSeguindo(user.getFollowersCount(), user.getFriendsCount());
 	        boolean isUsuarioPrincipal = false;
-			List<String> usersMains = (new AppTxt()).getUsersMain();
+			List<String> usersMains = (new FileUtils()).getFileData("/waiso-social-twitter/src/main/resources/META-INF/twitter-txt/", "users-main");
 			for(String userStr : usersMains){
 				if(userStr.equals(user.getScreenName())){
         			isUsuarioPrincipal = true;

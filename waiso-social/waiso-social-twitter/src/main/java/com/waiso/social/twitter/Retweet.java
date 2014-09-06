@@ -9,6 +9,8 @@ import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
+import com.waiso.social.facebook.GetPost;
+import com.waiso.social.framework.FileUtils;
 import com.waiso.social.framework.Utils;
 import com.waiso.social.framework.utilitario.DateUtils;
 
@@ -30,10 +32,10 @@ public class Retweet extends Thread {
             	String dataFinal = DateUtils.getInstance().dateToString(c, "yyyy-MM-dd");
             	c.add(Calendar.DAY_OF_MONTH, -2);
             	String dataInicial = DateUtils.getInstance().dateToString(c, "yyyy-MM-dd");
-        		List<String> usersRetweets = (new AppTxt()).getUsersRetweets();
-    			for(String user : usersRetweets){
-    				Utils.log("checking.timeline.user", user);
-        			String mTweet = getLastTweet(dataInicial, dataFinal, user);
+        		List<String> usersDataRetweets = (new FileUtils()).getFileData("/waiso-social-twitter/src/main/resources/META-INF/twitter-txt/", "users-retweets");
+    			for(String userData : usersDataRetweets){
+    				Utils.log("checking.timeline.user", userData);
+        			String mTweet = getLastTweet(dataInicial, dataFinal, userData);
             		if(mTweet != null){
         				Tweet.addTweet(mTweet);
         			}
@@ -45,38 +47,42 @@ public class Retweet extends Thread {
         }
     }
 
-	public String getLastTweet(String dataInicial, String dataFinal, String usuario){
-		String mTweet = null;//Iniciando twitter
-		try{
-			Date data = new Date(0);//Iniciando data 1970
+	public String getLastTweet(String dataInicial, String dataFinal, String userData){
+		String[] arrayUserData = userData.split(":");
+		String[] types = arrayUserData[0].split(",");
+		String user = arrayUserData[1];
+		String mTweet = null;
+		try {
+			Date data = new Date(0);
 			Query query = new Query();
 			query.setSince(dataInicial);
 			query.setUntil(dataFinal);
-			query.setQuery("from:" + usuario);
+			query.setQuery("from:" + user);
 			QueryResult result = AppTwitter.getTwitter().search(query);
-			while(result.hasNext()){
+			while (result.hasNext()) {
 				query = result.nextQuery();
-				for(Status status : result.getTweets()){
+				for (Status status : result.getTweets()) {
 					Date dataCriacao = status.getCreatedAt();
 					//Se a data do twitter for maior que a global, significa
 					//que o twitter pode ser o ultimo postado pelo usuario.
-					if(dataCriacao.after(data)){
-						Utils.log("catching.last.tweet.user", usuario);
+					if (dataCriacao.after(data)) {
+						Utils.log("catching.last.tweet.user", user);
 						mTweet = status.getText();
 						data = dataCriacao;
 					}
 				}
 				result = AppTwitter.getTwitter().search(query);
 			}
-		}catch(TwitterException e){
-			if(e.getErrorCode() == 88){
+		} catch (TwitterException e) {
+			if (e.getErrorCode() == 88) {
 				Utils.log("twitter.error.limit");
-			}else{
+			} else {
 				e.printStackTrace();
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//(new GetPost()).setPostGroup(user,types,  mTweet);//TODO: Melhor gravar em um arquivo txt...
 		return mTweet;
 	}
 }

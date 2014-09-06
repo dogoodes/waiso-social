@@ -7,19 +7,19 @@ public class Utils {
 
 	public static void logMessage(String message){
 		if(GerenciadorLog.isDebug(Utils.class)){
-			GerenciadorLog.debug(Utils.class, message);
+			GerenciadorLog.log(message);
 		}
 	}
 	
 	public static void log(String key){
 		if(GerenciadorLog.isDebug(Utils.class)){
-			GerenciadorLog.debug(Utils.class, GerenciadorMensagem.getMessage(key));
+			GerenciadorLog.log(GerenciadorMensagem.getMessage(key));
 		}
 	}
 	
 	public static void log(String key, Object...params){
 		if(GerenciadorLog.isDebug(Utils.class)){
-			GerenciadorLog.debug(Utils.class, GerenciadorMensagem.getMessage(key, params));
+			GerenciadorLog.log(GerenciadorMensagem.getMessage(key, params));
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.waiso.social.framework.exceptions;
 
-public class BussinessException extends UserException{
+public class BussinessException extends UserException {
 	
 	private static final long serialVersionUID = 1L;
 	

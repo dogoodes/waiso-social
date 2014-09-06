@@ -1,16 +1,13 @@
 {
-	"startup": {
+	"others": {
 		"groups" : {
-			"group-1": {
-				"groupId": "1",
-				"users-content-twitter": "user-twitter-1;user-twitter-2;user-twitter-3;user-twitter-4;user-twitter-5"
-			},
-			"group-2": {
-				"groupId": "2",
-				"users-content-twitter": "user-twitter-1;user-twitter-2;user-twitter-3;user-twitter-4;user-twitter-5"
+			"WAISO-teste": {
+				"groupId": "839309209426139",
+				"users-content-twitter": "olhardigital:g1tecnologia:TerraTecnoBR:UOLTecnologia:InovacaoTecnolo:jornal_empreend:EmpreendeWeb:computerworldbr:idgnow:_INFO:souempresario:TechTudo:Tec_Mundo:peqempresas"
 			}
 		}
 	},
+	"startup": {},
 	"programming": {},
 	"childrenscontent": {},
 	"entrepreneurship": {},

@@ -17,12 +17,10 @@ public class TesteGrupo {
 	 * Images e links nao podem estar junto no mesmo post...
 	 */
 	public static void main(String[] args) throws FacebookException, InterruptedException, MalformedURLException {
-		//ResponseList<Group> groups = AppFacebook.getFacebook().getGroups();
-		/*
+		ResponseList<Group> groups = AppFacebook.getFacebook().getGroups();
 		for (Group group : groups) {
 			System.out.println(group.getName() + " - " + group.getId());
 		}
-		*/
 		
 		/*
 		for (int x=0; x<50; x++) {
@@ -31,10 +29,10 @@ public class TesteGrupo {
 		}
 		*/
 		
-		PostUpdate postUpdate = new PostUpdate("Teste");
+		//PostUpdate postUpdate = new PostUpdate("Teste");
 		//postUpdate.setLink(new URL("http://www.google.com.br"));
-		postUpdate.setPicture(new URL("http://www.waveerp.com.br/erp-viewria/erp/img/home/logo_wave.gif"));
+		//postUpdate.setPicture(new URL("http://www.waveerp.com.br/erp-viewria/erp/img/home/logo_wave.gif"));
 		//AppFacebook.getFacebook().postGroupFeed("839309209426139", postUpdate);
-		AppFacebook.getFacebook().postGroupLink("839309209426139", new URL("http://www.waveerp.com.br/erp-viewria/erp/img/home/logo_wave.gif"));
+		//AppFacebook.getFacebook().postGroupLink("839309209426139", new URL("http://www.waveerp.com.br/erp-viewria/erp/img/home/logo_wave.gif"));
 	}
 }

@@ -7,6 +7,10 @@ import com.waiso.social.framework.configuracao.GerenciadorConfiguracao;
 import com.waiso.social.framework.email.GerenciadorEmail;
 
 public class GerenciadorLog {
+
+	public static void log(String debug) {
+		System.out.println(debug);
+	}
 	
 	public static void critical(Class clazz, String message){
 		criticalEmail(message);
@@ -27,7 +31,7 @@ public class GerenciadorLog {
 	public static void debug(Class clazz, String debug) {
 		System.out.println("DEBUG: " + debug);
 	}
-
+	
 	public static void error(Class clazz, String error) {
 		System.out.println("ERRORR: " + error);
 	}
@@ -38,8 +42,8 @@ public class GerenciadorLog {
 	}
 	
 	public static void error(Class clazz, Throwable error) {
-		boolean applyError = clazz.getSimpleName().matches("(MyIPServlet|PeopleBO|Login)");
-		if(applyError){
+		boolean applyError = clazz.getSimpleName().matches("(Utils)");
+		if (applyError) {
 			error.printStackTrace();
 		}
 	}

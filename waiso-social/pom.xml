@@ -83,5 +83,7 @@
 		<module>waiso-social-twitter</module>
 		<module>waiso-social-controller</module>
 		<module>waiso-social-facebook</module>
+		<module>waiso-social-app</module>
+		<module>waiso-social-data</module>
 	</modules>
 </project>

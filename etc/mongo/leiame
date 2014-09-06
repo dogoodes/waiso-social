@@ -1,0 +1,9 @@
+Para visualiar todos os tweets:
+
+Data Base mongo:  waisosocial
+Collection mongo: tweets
+Comandos:
+1- use waisosocial
+2- db.tweets.find()
+
+--------------------------------------------------------------------------

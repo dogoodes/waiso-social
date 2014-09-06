@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.waiso.social.framework.Utils;
 import com.waiso.social.framework.configuracao.GerenciadorConfiguracao;
 
 public class AppJson {
@@ -18,7 +19,7 @@ public class AppJson {
 			String environment = GerenciadorConfiguracao.getConfiguracao("development.environment");
 			return (JSONObject) parser.parse(new FileReader(environment + "/waiso-social-facebook/src/main/resources/META-INF/facebook-json/" + file));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Utils.log("file.exception", file);
 			return null;
 		} catch (IOException e) {
 			e.printStackTrace();

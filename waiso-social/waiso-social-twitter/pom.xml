@@ -54,5 +54,15 @@
 			<artifactId>waiso-social-framework</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.waiso.social.facebook</groupId>
+			<artifactId>waiso-social-facebook</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.waiso.social.data</groupId>
+			<artifactId>waiso-social-data</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

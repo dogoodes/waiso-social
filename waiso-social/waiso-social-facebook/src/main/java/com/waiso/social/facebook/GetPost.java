@@ -6,7 +6,9 @@ import java.util.Set;
 
 import org.json.simple.JSONObject;
 
+import com.waiso.social.framework.FileUtils;
 import com.waiso.social.framework.Utils;
+import com.waiso.social.framework.exceptions.FileException;
 import com.waiso.social.framework.utilitario.StringUtils;
 
 import facebook4j.Comment;
@@ -29,12 +31,12 @@ public class GetPost extends Thread {
 	@Override
     public void run() {
         while(true) {
-            try{
+            try {
             	Utils.logMessage("checking.timeline.home");
             	getTimelineHome();
             	getTimelineGroups();
             	GetPost.sleep(time);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -88,38 +90,37 @@ public class GetPost extends Thread {
 		Like.addCommentId(commentId);
 	}
 	
-	//TODO: parei a implementacao dos grupos aqui...
-	public static void main(String[] args) {
-		(new GetPost()).setPostGroup("user-twitter-2", null);
-	}
-	//TODO: parei a implementacao dos grupos aqui...
 	@SuppressWarnings("unchecked")
-	public void setPostGroup(String user, String message) {
-		JSONObject jsonObject = (new AppJson()).getFileJson("groups-users-content");
-		if (jsonObject != null) {
+	public void setPostGroup(String user, String[] groupTypes, String message) {
+		try {
+			JSONObject jsonObject = (new FileUtils()).getFileJson("/waiso-social-facebook/src/main/resources/META-INF/facebook-json/", "groups-users-content");
 			Set<String> jsonKeys = jsonObject.keySet();
-			for (String jsonKey : jsonKeys) {
-				JSONObject groupsType = (JSONObject) jsonObject.get(jsonKey);
-				JSONObject groups = (JSONObject) groupsType.get("groups");
-				if (groups != null) {
-					Set<String> groupKeys = groups.keySet();
-					for (String groupKey : groupKeys) {
-						JSONObject group = (JSONObject) groups.get(groupKey);
-						String users = (String) group.get("users-content-twitter");
-						if (users.indexOf(user) != -1) {
-							String groupId = (String) group.get("groupId");
-							com.waiso.social.facebook.Post.addPostGroupPosts(groupId, new PostUpdate(message));
+			for (String groupType : jsonKeys) {
+				for (int x=0, y=groupTypes.length; x<y; x++) {
+					if (groupType.equals(groupTypes[x])) {
+						JSONObject groupsType = (JSONObject) jsonObject.get(groupType);
+						JSONObject groups = (JSONObject) groupsType.get("groups");
+						if (groups != null) {
+							Set<String> groupKeys = groups.keySet();
+							for (String groupKey : groupKeys) {
+								JSONObject group = (JSONObject) groups.get(groupKey);
+								String users = (String) group.get("users-content-twitter");
+								if (users.indexOf(user) != -1) {
+									String groupId = (String) group.get("groupId");
+									com.waiso.social.facebook.Post.addPostGroupPosts(groupId, new PostUpdate(message));
+								}
+							}
 						}
 					}
 				}
 			}
-		}
+		} catch (FileException e) {}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void setPostGroup() {
-		JSONObject jsonObject = (new AppJson()).getFileJson("groups-posts");
-		if (jsonObject != null) {
+		try {
+			JSONObject jsonObject = (new FileUtils()).getFileJson("/waiso-social-facebook/src/main/resources/META-INF/facebook-json/", "groups-posts");
 			Set<String> jsonKeys = jsonObject.keySet();
 			for (String jsonKey : jsonKeys) {
 				JSONObject groupsType = (JSONObject) jsonObject.get(jsonKey);
@@ -150,6 +151,6 @@ public class GetPost extends Thread {
 					}
 				}
 			}
-		}
+		} catch (FileException e) {}
 	}
 }

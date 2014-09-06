@@ -6,6 +6,10 @@ public class ConnectionException extends UserException {
 
 	private static final long serialVersionUID = 1L;
 	
+	public ConnectionException() {
+		super();;
+	}
+	
 	public ConnectionException(Class origin, Throwable cause) {
 		super(cause);
 		GerenciadorLog.error(origin, cause);
