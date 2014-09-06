@@ -43,4 +43,10 @@ public class GenericDAO implements IGenericDAO {
 		BasicDBObject searchQuery = new BasicDBObject("_id", _id);
 		collection.update(searchQuery, new BasicDBObject().append("$push", object));
 	}
+
+	@Override
+	public void remover(String dbName, BasicDBObject object) {
+		DBCollection collection = Connector.getDataBase().getCollection(dbName);
+		collection.remove(object);
+	}
 }

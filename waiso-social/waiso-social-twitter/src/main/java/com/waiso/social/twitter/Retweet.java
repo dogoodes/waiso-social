@@ -9,7 +9,6 @@ import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
-import com.waiso.social.facebook.GetPost;
 import com.waiso.social.framework.FileUtils;
 import com.waiso.social.framework.Utils;
 import com.waiso.social.framework.utilitario.DateUtils;
@@ -33,12 +32,14 @@ public class Retweet extends Thread {
             	c.add(Calendar.DAY_OF_MONTH, -2);
             	String dataInicial = DateUtils.getInstance().dateToString(c, "yyyy-MM-dd");
         		List<String> usersDataRetweets = (new FileUtils()).getFileData("/waiso-social-twitter/src/main/resources/META-INF/twitter-txt/", "users-retweets");
+        		//List<String> usersDataRetweets = (new DataTwitter()).findUsersRetweets();
     			for(String userData : usersDataRetweets){
     				Utils.log("checking.timeline.user", userData);
         			String mTweet = getLastTweet(dataInicial, dataFinal, userData);
             		if(mTweet != null){
         				Tweet.addTweet(mTweet);
         			}
+            		//(new DataTwitter()).insertRetweet(user, types, mTweet);
     			}
             	Retweet.sleep(time);
             }catch(Exception e){
@@ -47,10 +48,7 @@ public class Retweet extends Thread {
         }
     }
 
-	public String getLastTweet(String dataInicial, String dataFinal, String userData){
-		String[] arrayUserData = userData.split(":");
-		String[] types = arrayUserData[0].split(",");
-		String user = arrayUserData[1];
+	public String getLastTweet(String dataInicial, String dataFinal, String user){
 		String mTweet = null;
 		try {
 			Date data = new Date(0);
@@ -82,7 +80,6 @@ public class Retweet extends Thread {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//(new GetPost()).setPostGroup(user,types,  mTweet);//TODO: Melhor gravar em um arquivo txt...
 		return mTweet;
 	}
 }

@@ -11,4 +11,5 @@ public interface IGenericDAO {
 	public void update(String dbName, Object _id, BasicDBObject object);
 	public void update(String dbName, Object _id, List<BasicDBObject> objects);
 	public void insertAggregation(String dbName, Object _id, BasicDBObject object);
+	public void remover(String dbName, BasicDBObject object);
 }
