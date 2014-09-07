@@ -39,7 +39,7 @@ public class Retweet extends Thread {
             		if(mTweet != null){
         				Tweet.addTweet(mTweet);
         			}
-            		//(new DataTwitter()).insertRetweet(user, types, mTweet);
+            		//(new DataTwitter()).insertFirstContentPostGroup(user, types, mTweet);
     			}
             	Retweet.sleep(time);
             }catch(Exception e){

@@ -7,17 +7,13 @@ import twitter4j.TwitterException;
 
 import com.waiso.social.framework.Utils;
 
-/**
- * Thread responsavel por enviar um tweet a cada
- * invervalo de tempo iniciado para a classe.
- */
 public class Tweet extends Thread {
 
 	private static LinkedList<String> tweets = new LinkedList<String>();
 	private long time = 0;
 	
-	public Tweet(){}
-	public Tweet(long time){
+	public Tweet() {}
+	public Tweet(long time) {
 		this.time = time;
 	}
 	
@@ -49,9 +45,6 @@ public class Tweet extends Thread {
 		Tweet.tweets = tweets;
 	}
 	
-	/**
-	 * Tweets na memoria. Seram enviados de acordo com a ordem da fila.
-	 */
 	public String getTweet(){
 		int posicao = tweets.size()-1;
 		String tweet = tweets.get(posicao);
@@ -59,35 +52,32 @@ public class Tweet extends Thread {
 		return tweet;
 	}
 
-	/**
-	 * Metodo para enviar tweets na pilha.
-	 */
 	private void send(){
-		if(Tweet.getTweets().size() > 0){
+		if (Tweet.getTweets().size() > 0) {
 			String mTweet = getTweet();
 			Utils.log("tweet.sending", mTweet);
 			tweet(mTweet);
-    	}else{
+    	} else {
     		Utils.log("without.tweets");
     	}
 	}
 	
 	public void tweet(String tweet) {
-		try{
-			try{
+		try {
+			try {
 				AppTwitter.getTwitter().updateStatus(tweet);
 				Utils.log("tweet.sent.sucess", tweet);
-			}catch(TwitterException e){
-				if(e.getErrorCode() == 187){
+			} catch (TwitterException e) {
+				if (e.getErrorCode() == 187) {
 					Utils.log("tweet.repeated", tweet);
-					send();//Pega outro tweet e envia.
-				}else if(e.getErrorCode() == 88){
+					send();
+				} else if (e.getErrorCode() == 88) {
 					Utils.log("twitter.error.limit");
-				}else{
+				} else {
 					e.printStackTrace();
 				}
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

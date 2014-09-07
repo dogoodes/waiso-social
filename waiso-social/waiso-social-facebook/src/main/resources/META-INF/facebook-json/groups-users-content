@@ -1,10 +1,7 @@
 {
 	"others": {
 		"groups" : {
-			"WAISO-teste": {
-				"groupId": "839309209426139",
-				"users-content-twitter": "olhardigital:g1tecnologia:TerraTecnoBR:UOLTecnologia:InovacaoTecnolo:jornal_empreend:EmpreendeWeb:computerworldbr:idgnow:_INFO:souempresario:TechTudo:Tec_Mundo:peqempresas"
-			}
+			"839309209426139" : "WAISO-teste"
 		}
 	},
 	"startup": {},

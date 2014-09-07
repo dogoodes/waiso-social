@@ -18,11 +18,10 @@ public class GetTweet extends Thread {
 	@Override
     public void run() {
         while(true) {
-            try{
-            	System.out.println(getTweet());
+            try {
             	Tweet.addTweet(getTweet());
                 GetTweet.sleep(time);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -31,7 +30,7 @@ public class GetTweet extends Thread {
 	public String getTweet() throws IOException {
 		List<String> tweets = (new FileUtils()).getFileData("/waiso-social-twitter/src/main/resources/META-INF/twitter-txt/", "tweets");
     	Random random = new Random();
-    	Integer indexTweet = random.nextInt(tweets.size()+1);//Precisa setar um alem da quantidade para pegar a ultima linha.
+    	Integer indexTweet = random.nextInt(tweets.size()+1);
     	return tweets.get(indexTweet);
 	}
 }

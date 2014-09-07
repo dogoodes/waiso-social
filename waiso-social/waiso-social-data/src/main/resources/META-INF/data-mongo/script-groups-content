@@ -1,0 +1,1 @@
+db.datagroupcontent.insert( { "others": { "groups" : { "839309209426139" : "WAISO-teste" } } } )

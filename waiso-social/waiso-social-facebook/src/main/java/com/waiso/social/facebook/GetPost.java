@@ -6,9 +6,12 @@ import java.util.Set;
 
 import org.json.simple.JSONObject;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
 import com.waiso.social.framework.FileUtils;
 import com.waiso.social.framework.Utils;
 import com.waiso.social.framework.exceptions.FileException;
+import com.waiso.social.framework.exceptions.ObjectNotFoundException;
 import com.waiso.social.framework.utilitario.StringUtils;
 
 import facebook4j.Comment;
@@ -32,9 +35,10 @@ public class GetPost extends Thread {
     public void run() {
         while(true) {
             try {
-            	Utils.logMessage("checking.timeline.home");
+            	Utils.log("checking.timeline.home");
             	getTimelineHome();
             	getTimelineGroups();
+            	//getContentPostGroup();
             	GetPost.sleep(time);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -90,26 +94,30 @@ public class GetPost extends Thread {
 		Like.addCommentId(commentId);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public void setPostGroup(String user, String[] groupTypes, String message) {
+	public static void main(String[] args) {
+		new GetPost().getContentPostGroup();
+	}
+	
+	public void getContentPostGroup() {
 		try {
-			JSONObject jsonObject = (new FileUtils()).getFileJson("/waiso-social-facebook/src/main/resources/META-INF/facebook-json/", "groups-users-content");
-			Set<String> jsonKeys = jsonObject.keySet();
-			for (String groupType : jsonKeys) {
-				for (int x=0, y=groupTypes.length; x<y; x++) {
-					if (groupType.equals(groupTypes[x])) {
-						JSONObject groupsType = (JSONObject) jsonObject.get(groupType);
-						JSONObject groups = (JSONObject) groupsType.get("groups");
-						if (groups != null) {
-							Set<String> groupKeys = groups.keySet();
-							for (String groupKey : groupKeys) {
-								JSONObject group = (JSONObject) groups.get(groupKey);
-								String users = (String) group.get("users-content-twitter");
-								if (users.indexOf(user) != -1) {
-									String groupId = (String) group.get("groupId");
-									com.waiso.social.facebook.Post.addPostGroupPosts(groupId, new PostUpdate(message));
+			DBCursor cursor = (new DataFacebook()).findDataGroupsContent();
+			while (cursor.hasNext()) {
+				BasicDBObject dataGroupContent = (BasicDBObject) cursor.next();
+				for (String groupType : dataGroupContent.keySet()) {
+					if (!groupType.equals("_id")) {
+						try {
+							BasicDBObject post = (new DataFacebook()).getFirstContentPostGroup(groupType);
+							BasicDBObject groups = (BasicDBObject) dataGroupContent.get("groups");
+							if (groups != null) {
+								Set<String> groupIds = groups.keySet();
+								for (String groupId : groupIds) {
+									String message = (String) post.get("message");
+									com.waiso.social.facebook.Post.addPostGroupPosts(groupId, new PostUpdate(message));								
 								}
 							}
+							(new DataFacebook()).removeFirstContentPostGroup(groupType);
+						} catch (ObjectNotFoundException e) {
+							Utils.log("without.post.group", groupType);
 						}
 					}
 				}
