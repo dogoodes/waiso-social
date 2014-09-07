@@ -27,7 +27,7 @@ public class Data {
 			
 			System.out.println(dataMessage);
 		}
-		/*
+		
 		List<String> tweets = (new FileUtils()).getFileData("/waiso-social-data/src/main/resources/META-INF/data-mongo/", "data-tweets");
 		Integer tweetCont = 1;
 		for (String tweet : tweets) {
@@ -75,6 +75,6 @@ public class Data {
 			
 			System.out.println(dataGroupContent);
 		}
-		*/
+		
 	}
 }
