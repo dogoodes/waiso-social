@@ -94,11 +94,7 @@ public class GetPost extends Thread {
 		Like.addCommentId(commentId);
 	}
 	
-	public static void main(String[] args) {
-		new GetPost().getContentPostGroup();
-	}
-	
-	public void getContentPostGroup() {
+	private void getContentPostGroup() {
 		try {
 			DBCursor cursor = (new DataFacebook()).findDataGroupsContent();
 			while (cursor.hasNext()) {

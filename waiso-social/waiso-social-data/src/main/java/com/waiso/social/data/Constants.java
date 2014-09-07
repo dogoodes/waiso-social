@@ -5,6 +5,7 @@ public final class Constants {
 	private Constants(){}
 	public static final String DATA_BASE = "waisosocial";
 	public static final String COLLECTION_TWEETS = "tweets";
+	public static final String COLLECTION_MESSAGES = "messages";
 	public static final String COLLECTION_USERS_RETWEETS = "usersretweets";
 	public static final String COLLECTION_USERS_MAIN = "usersmain";
 	public static final String COLLECTION_GROUPS_CONTENT = "groupscontent";

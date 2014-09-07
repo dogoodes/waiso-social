@@ -100,13 +100,13 @@ public class Post extends Thread {
 						PostUpdate post = posts.get(posicao);
 						posts.remove(posicao);
 						Utils.log("post.sending", post.getMessage());
-						AppFacebook.getFacebook().postGroupFeed(groupId, post);
+						//AppFacebook.getFacebook().postGroupFeed(groupId, post);
 						Utils.log("post.sent.sucess", post.getMessage());
 					} else {
 						Utils.log("without.list", ("GroupId [" + groupId + "] - Post"));
 					}
 				}
-			} catch (FacebookException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} catch (Exception e) {

@@ -22,5 +22,9 @@ public class App {
 		
 		System.out.println("Thread 2");
 		new Thread().sleep(Process.in10Seconds.getTime());
+		
+		//Post post = new Post(Process.in2hours.getTime());
+		//Post post = new Post(Process.in2Seconds.getTime());
+		//post.start();
 	}
 }

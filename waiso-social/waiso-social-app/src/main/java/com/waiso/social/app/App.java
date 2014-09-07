@@ -57,7 +57,7 @@ public class App {
 		System.out.println("Thread 3");
 		new Thread().sleep(Process.in10Seconds.getTime());
 		
-		GetUser getUser = new GetUser(Process.in3hours.getTime(), args);
+		GetUser getUser = new GetUser(Process.in3Hours.getTime(), args);
 		getUser.start();
 		
 		System.out.println("Thread 4");
@@ -76,7 +76,7 @@ public class App {
 	private void sendInfo()  throws InterruptedException {
 		while(true){
 			(new Tweet()).tweet("Me adicionem no Facebook? https://www.facebook.com/waisoped - Em breve teremos novidades!!! =)");
-			new Thread().sleep(Process.in3hours.getTime());
+			new Thread().sleep(Process.in3Hours.getTime());
 		}
 	}
 }

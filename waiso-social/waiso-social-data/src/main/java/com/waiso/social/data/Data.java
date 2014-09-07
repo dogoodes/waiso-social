@@ -1,6 +1,7 @@
 package com.waiso.social.data;
 
 import static com.waiso.social.data.Constants.COLLECTION_DATA_GROUPS_CONTENT;
+import static com.waiso.social.data.Constants.COLLECTION_MESSAGES;
 import static com.waiso.social.data.Constants.COLLECTION_TWEETS;
 import static com.waiso.social.data.Constants.COLLECTION_USERS_MAIN;
 import static com.waiso.social.data.Constants.COLLECTION_USERS_RETWEETS;
@@ -17,6 +18,16 @@ public class Data {
 	public static void main(String[] args) throws IOException, ObjectNotFoundException {
 		IGenericDAO dao = new GenericDAO();
 		
+		List<String> messages = (new FileUtils()).getFileData("/waiso-social-data/src/main/resources/META-INF/data-mongo/", "data-messages");
+		Integer messageCont = 1;
+		for (String message : messages) {
+			BasicDBObject dataMessage = new BasicDBObject(messageCont.toString(), message);
+			dao.insert(COLLECTION_MESSAGES, dataMessage);
+			messageCont++;
+			
+			System.out.println(dataMessage);
+		}
+		/*
 		List<String> tweets = (new FileUtils()).getFileData("/waiso-social-data/src/main/resources/META-INF/data-mongo/", "data-tweets");
 		Integer tweetCont = 1;
 		for (String tweet : tweets) {
@@ -64,5 +75,6 @@ public class Data {
 			
 			System.out.println(dataGroupContent);
 		}
+		*/
 	}
 }
