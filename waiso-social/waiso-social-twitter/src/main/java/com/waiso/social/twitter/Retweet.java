@@ -3,6 +3,7 @@ package com.waiso.social.twitter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -32,14 +33,16 @@ public class Retweet extends Thread {
             	c.add(Calendar.DAY_OF_MONTH, -2);
             	String dataInicial = DateUtils.getInstance().dateToString(c, "yyyy-MM-dd");
         		List<String> usersDataRetweets = (new FileUtils()).getFileData("/waiso-social-twitter/src/main/resources/META-INF/twitter-txt/", "users-retweets");
-        		//List<String> usersDataRetweets = (new DataTwitter()).findUsersRetweets();
-    			for(String userData : usersDataRetweets){
-    				Utils.log("checking.timeline.user", userData);
-        			String mTweet = getLastTweet(dataInicial, dataFinal, userData);
+        		//Map<String, String> usersDataRetweets = (new DataTwitter()).findUsersRetweets();
+    			for(String user : usersDataRetweets){
+        		//for(String user : usersDataRetweets.keySet()){
+    				Utils.log("checking.timeline.user", user);
+        			String mTweet = getLastTweet(dataInicial, dataFinal, user);
             		if(mTweet != null){
         				Tweet.addTweet(mTweet);
         			}
-            		//(new DataTwitter()).insertFirstContentPostGroup(user, types, mTweet);
+            		//String types = usersDataRetweets.get(types);
+            		//(new DataTwitter()).insertFirstContentPostGroup(user, types.split(":"), mTweet);
     			}
             	Retweet.sleep(time);
             }catch(Exception e){

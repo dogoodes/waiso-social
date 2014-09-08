@@ -24,7 +24,7 @@ public class FileUtils {
 			FileInputStream stream = new FileInputStream(environment + path + file);
 			return new InputStreamReader(stream);
 		} catch (IOException e) {
-			Utils.log("system.file.exception", (path + file));
+			Utils.log("system.file.exception", path, file);
 			throw new FileException(FileUtils.class, e);
 		}
 	}

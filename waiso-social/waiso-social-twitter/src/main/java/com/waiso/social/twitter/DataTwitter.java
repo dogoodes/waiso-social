@@ -4,8 +4,8 @@ import static com.waiso.social.data.Constants.COLLECTION_GROUPS_CONTENT;
 import static com.waiso.social.data.Constants.COLLECTION_TWEETS;
 import static com.waiso.social.data.Constants.COLLECTION_USERS_RETWEETS;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -54,8 +54,8 @@ public class DataTwitter {
 		throw new ObjectNotFoundException();
 	}
 	
-	public List<String> findUsersRetweets() {
-		List<String> usersRetweets = new ArrayList<String>();
+	public Map<String, String> findUsersRetweets() {
+		Map<String, String> usersRetweets = new HashMap<String, String>();
 		IGenericFinder finder = new GenericFinder();
 		DBCollection db = finder.findCollectionByName(COLLECTION_USERS_RETWEETS);
 		DBCursor cursor = db.find();
@@ -65,7 +65,8 @@ public class DataTwitter {
 				if (!number.equals("_id")) { 
 					BasicDBObject user = (BasicDBObject) dataUser.get(number);
 					String userName = (String) user.get("user");
-					usersRetweets.add(userName);
+					String types = (String) user.get("types");
+					usersRetweets.put(userName, types);
 				}
 			}
         }
