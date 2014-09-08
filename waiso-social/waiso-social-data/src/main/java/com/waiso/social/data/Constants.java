@@ -10,6 +10,7 @@ public final class Constants {
 	public static final String COLLECTION_USERS_MAIN = "usersmain";
 	public static final String COLLECTION_GROUPS_CONTENT = "groupscontent";
 	public static final String COLLECTION_DATA_GROUPS_CONTENT = "datagroupscontent";
+	public static final String COLLECTION_DATA_GROUPS_POSTS = "datagroupsposts";
 	public static final String UTF8 = "UTF8";
 	public static final String HOST = "localhost";
 	public static final int PORT = 27017;

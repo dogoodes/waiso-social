@@ -45,7 +45,7 @@ public class App {
 	}
 
 	@SuppressWarnings("static-access")
-	private void sendInfo()  throws InterruptedException {
+	private void sendInfo() throws InterruptedException {
 		while(true){
 			(new Tweet()).tweet("Me adicionem no Facebook? https://www.facebook.com/waisoti - Em breve teremos novidades!!! =)");
 			new Thread().sleep(Process.in3Hours.getTime());

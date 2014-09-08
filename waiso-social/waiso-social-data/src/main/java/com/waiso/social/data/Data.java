@@ -1,6 +1,7 @@
 package com.waiso.social.data;
 
 import static com.waiso.social.data.Constants.COLLECTION_DATA_GROUPS_CONTENT;
+import static com.waiso.social.data.Constants.COLLECTION_DATA_GROUPS_POSTS;
 import static com.waiso.social.data.Constants.COLLECTION_MESSAGES;
 import static com.waiso.social.data.Constants.COLLECTION_TWEETS;
 import static com.waiso.social.data.Constants.COLLECTION_USERS_MAIN;
@@ -8,13 +9,18 @@ import static com.waiso.social.data.Constants.COLLECTION_USERS_RETWEETS;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+
+import org.json.simple.JSONObject;
 
 import com.mongodb.BasicDBObject;
 import com.waiso.social.framework.FileUtils;
+import com.waiso.social.framework.exceptions.FileException;
 import com.waiso.social.framework.exceptions.ObjectNotFoundException;
 
 public class Data {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException, ObjectNotFoundException {
 		IGenericDAO dao = new GenericDAO();
 		
@@ -76,5 +82,36 @@ public class Data {
 			System.out.println(dataGroupContent);
 		}
 		
+		try {
+			JSONObject jsonObject = (new FileUtils()).getFileJson("/waiso-social-data/src/main/resources/META-INF/data-mongo/", "data-groups-posts");
+			Set<String> jsonKeys = jsonObject.keySet();
+			for (String groupType : jsonKeys) {
+				BasicDBObject dataGroupPost = new BasicDBObject();
+				JSONObject groupsType = (JSONObject) jsonObject.get(groupType);
+				JSONObject groups = (JSONObject) groupsType.get("groups");
+				BasicDBObject dataGroups = new BasicDBObject();
+				if (groups != null) {
+					Set<String> groupKeys = groups.keySet();
+					for (String groupName : groupKeys) {
+						JSONObject group = (JSONObject) groups.get(groupName);
+						String groupId = (String) group.get("groupId");
+						JSONObject post = (JSONObject) group.get("post");
+						BasicDBObject dataGroup = new BasicDBObject("groupId", groupId);
+						if (post != null) {
+							String message = (String) post.get("message");
+							String link = (String) post.get("link");
+							BasicDBObject dataPosts = new BasicDBObject("message", message);
+							dataPosts.put("link", link);
+							dataGroup.append("post", dataPosts);
+						}
+						dataGroups.put(groupName, dataGroup);
+					}
+				}
+				dataGroupPost.put(groupType, dataGroups);
+				dao.insert(COLLECTION_DATA_GROUPS_POSTS, dataGroupPost);
+				
+				System.out.println(dataGroupPost);
+			}
+		} catch (FileException e) {}
 	}
 }

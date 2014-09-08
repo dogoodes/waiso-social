@@ -1,6 +1,7 @@
 package com.waiso.social.facebook;
 
 import static com.waiso.social.data.Constants.COLLECTION_DATA_GROUPS_CONTENT;
+import static com.waiso.social.data.Constants.COLLECTION_DATA_GROUPS_POSTS;
 import static com.waiso.social.data.Constants.COLLECTION_GROUPS_CONTENT;
 
 import com.mongodb.BasicDBObject;
@@ -32,6 +33,12 @@ public class DataFacebook {
 	public DBCursor findDataGroupsContent() {
 		IGenericFinder finder = new GenericFinder();
 		DBCollection db = finder.findCollectionByName(COLLECTION_DATA_GROUPS_CONTENT);
+		return db.find();
+	}
+	
+	public DBCursor findDataGroupsPosts() {
+		IGenericFinder finder = new GenericFinder();
+		DBCollection db = finder.findCollectionByName(COLLECTION_DATA_GROUPS_POSTS);
 		return db.find();
 	}
 }

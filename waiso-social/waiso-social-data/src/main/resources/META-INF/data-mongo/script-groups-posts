@@ -1,0 +1,7 @@
+{ "technology" : { } , "_id" : { "$oid" : "540e1cbf44ae60c39e6c53fb"}}
+{ "programming" : { } , "_id" : { "$oid" : "540e1cbf44ae60c39e6c53fc"}}
+{ "other" : { "WAISO-teste" : { "groupId" : "839309209426139" , "post" : { "message" : "Teste Mensagem ..." , "link" : ""}}} , "_id" : { "$oid" : "540e1cbf44ae60c39e6c53fd"}}
+{ "comedy" : { } , "_id" : { "$oid" : "540e1cbf44ae60c39e6c53fe"}}
+{ "childrenscontent" : { } , "_id" : { "$oid" : "540e1cbf44ae60c39e6c53ff"}}
+{ "startup" : { } , "_id" : { "$oid" : "540e1cbf44ae60c39e6c5400"}}
+{ "entrepreneurship" : { } , "_id" : { "$oid" : "540e1cbf44ae60c39e6c5401"}}

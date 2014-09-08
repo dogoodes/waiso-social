@@ -13,6 +13,7 @@ import facebook4j.PostUpdate;
 public class Post extends Thread {
 
 	private static LinkedList<String> posts = new LinkedList<String>();
+	private static Map<String, LinkedList<PostUpdate>> groupContentPosts = new HashMap<String, LinkedList<PostUpdate>>();
 	private static Map<String, LinkedList<PostUpdate>> groupPosts = new HashMap<String, LinkedList<PostUpdate>>();
 	private long time = 0;
 	
@@ -24,11 +25,17 @@ public class Post extends Thread {
 	@Override
     public void run() {
         while(true) {
-            try{
+            try {
             	post();
-            	postGroups();
+            	
+            	if (groupPosts.size() > 0) {
+            		postGroups();
+            	} else {
+            		postContentGroups();
+            	}
+            	
                 Post.sleep(time);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -50,8 +57,20 @@ public class Post extends Thread {
 		Post.posts = posts;
 	}
 	
+	public static void addPostContentGroupPosts(String groupId, PostUpdate post){
+		LinkedList<PostUpdate> posts = groupPosts.get(groupId);
+		if (posts == null) {
+			posts = new LinkedList<PostUpdate>();
+		}
+		posts.add(post);
+		groupContentPosts.put(groupId, posts);
+	}
+	
 	public static void addPostGroupPosts(String groupId, PostUpdate post){
 		LinkedList<PostUpdate> posts = groupPosts.get(groupId);
+		if (posts == null) {
+			posts = new LinkedList<PostUpdate>();
+		}
 		posts.add(post);
 		groupPosts.put(groupId, posts);
 	}
@@ -100,7 +119,31 @@ public class Post extends Thread {
 						PostUpdate post = posts.get(posicao);
 						posts.remove(posicao);
 						Utils.log("post.sending", post.getMessage());
-						//AppFacebook.getFacebook().postGroupFeed(groupId, post);
+						AppFacebook.getFacebook().postGroupFeed(groupId, post);
+						Utils.log("post.sent.sucess", post.getMessage());
+					} else {
+						Utils.log("without.list", ("GroupId [" + groupId + "] - Post"));
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void postContentGroups() {
+		try {
+			try {
+				for (String groupId : groupContentPosts.keySet()) {
+					LinkedList<PostUpdate> posts = groupContentPosts.get(groupId);
+					if (posts.size() > 0) {
+						int posicao = posts.size()-1;
+						PostUpdate post = posts.get(posicao);
+						posts.remove(posicao);
+						Utils.log("post.sending", post.getMessage());
+						AppFacebook.getFacebook().postGroupFeed(groupId, post);
 						Utils.log("post.sent.sucess", post.getMessage());
 					} else {
 						Utils.log("without.list", ("GroupId [" + groupId + "] - Post"));

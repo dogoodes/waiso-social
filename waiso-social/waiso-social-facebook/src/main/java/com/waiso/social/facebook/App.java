@@ -23,8 +23,17 @@ public class App {
 		System.out.println("Thread 2");
 		new Thread().sleep(Process.in10Seconds.getTime());
 		
-		//Post post = new Post(Process.in2hours.getTime());
-		//Post post = new Post(Process.in2Seconds.getTime());
-		//post.start();
+		Post post = new Post(Process.in2Hours.getTime());
+		post.start();
+		
+		(new App()).getPost();
+	}
+	
+	@SuppressWarnings("static-access")
+	private void getPost() throws InterruptedException {
+		while(true){
+			(new GetPost()).getPostGroup();
+			new Thread().sleep(Process.in3Hours.getTime());
+		}
 	}
 }
