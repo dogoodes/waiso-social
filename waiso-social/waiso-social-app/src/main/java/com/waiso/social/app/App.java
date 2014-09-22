@@ -1,14 +1,14 @@
 package com.waiso.social.app;
 
-import com.waiso.social.facebook.AppFacebook;
-import com.waiso.social.facebook.Post;
+import com.waiso.social.app.facebook.AppFacebook;
+import com.waiso.social.app.facebook.Post;
+import com.waiso.social.app.twitter.AppTwitter;
+import com.waiso.social.app.twitter.GetTweet;
+import com.waiso.social.app.twitter.GetUser;
+import com.waiso.social.app.twitter.Retweet;
+import com.waiso.social.app.twitter.Tweet;
+import com.waiso.social.app.twitter.User;
 import com.waiso.social.framework.Process;
-import com.waiso.social.twitter.AppTwitter;
-import com.waiso.social.twitter.GetTweet;
-import com.waiso.social.twitter.GetUser;
-import com.waiso.social.twitter.Retweet;
-import com.waiso.social.twitter.Tweet;
-import com.waiso.social.twitter.User;
 
 public class App {
 
@@ -50,7 +50,7 @@ public class App {
 		System.out.println("Thread 5 - Twitter");
 		new Thread().sleep(Process.in10Seconds.getTime());
 		
-		Post post = new Post(Process.in2Hours.getTime());
+		Post post = new Post(Process.in40Minutes.getTime());
 		post.start();
 		
 		System.out.println("Thread 6 - Facebook");
@@ -61,9 +61,9 @@ public class App {
 
 	@SuppressWarnings("static-access")
 	private void sendInfo() throws InterruptedException {
-		while(true){
-			//(new Tweet()).tweet("Me adicionem no Facebook? https://www.facebook.com/waisoti - Em breve teremos novidades!!! =)");
+		//while(true){
+			//(new Tweet()).tweet("Acesse: http://www.waiso.com.br");
 			//new Thread().sleep(Process.in3Hours.getTime());
-		}
+		//}
 	}
 }
