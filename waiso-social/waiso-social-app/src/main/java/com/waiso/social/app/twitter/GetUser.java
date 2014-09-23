@@ -23,14 +23,14 @@ public class GetUser extends Thread {
         		//Eu sigo a pessoa, mas ela nao me segue...
         		for(Long idsFollower : idsFollowers){
         			if(!idsFriends.contains(idsFollower)){
-        				com.waiso.social.twitter.User.addFriendsNotFollowers(idsFollower);
+        				com.waiso.social.app.twitter.User.addFriendsNotFollowers(idsFollower);
         			}
         		}
         		
         		//Pessoa que me segue, mas eu nao sigo ela...
         		for(Long idsFriend : idsFriends){
         			if(!idsFollowers.contains(idsFriend)){
-        				com.waiso.social.twitter.User.addFollowersNotFriends(idsFriend);
+        				com.waiso.social.app.twitter.User.addFollowersNotFriends(idsFriend);
         			}
         		}
                 GetUser.sleep(time);
