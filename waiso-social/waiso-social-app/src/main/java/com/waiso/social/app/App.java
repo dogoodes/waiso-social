@@ -61,9 +61,9 @@ public class App {
 
 	@SuppressWarnings("static-access")
 	private void sendInfo() throws InterruptedException {
-		//while(true){
-			//(new Tweet()).tweet("Acesse: http://www.waiso.com.br");
-			//new Thread().sleep(Process.in3Hours.getTime());
-		//}
+		while(true){
+			(new Tweet()).tweet("Acesse: http://www.waiso.com.br");
+			new Thread().sleep(Process.in3Hours.getTime());
+		}
 	}
 }
